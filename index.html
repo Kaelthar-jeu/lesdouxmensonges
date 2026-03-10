@@ -505,7 +505,7 @@ const SAVE_KEY = 'ldm_save_v1';
 
 let G = {
   joueur: { prenom: 'Alexandre', sexe: 'homme', age: 34 },
-  progression: { acte: 1, scene: 1, extraitTermine: false, abonne: false },
+  progression: { acte: 1, scene: 1, extraitTermine: false, abonne: false, nbChoix: 0 },
   savoir: {
     sophieEstPredatrice: false,
     marionEstMorte: false,
@@ -667,7 +667,7 @@ Narration prose PUIS exactement 4 choix numérotés :
 4 — quatrième choix
 
 === SIGNAL PAYWALL ===
-À la fin de l'Acte I Scène 1 UNIQUEMENT, après les 4 choix, ajoute exactement : [EXTRAIT_TERMINE]
+Ne pas déclencher le paywall pour l'instant. Ne jamais ajouter [EXTRAIT_TERMINE].
 
 === TAGS DE MISE À JOUR ===
 [SAVOIR:sophieEstPredatrice] [SAVOIR:marionEstMorte] [SAVOIR:pierreAMenti] [SAVOIR:bernardSaitPourGerard] [SAVOIR:marionEtPierreEnContact]
@@ -755,7 +755,9 @@ function traiterReponse(texte) {
   const propre = nettoyer(texte);
   storyEl.innerHTML = propre.split('\n\n').filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('');
 
-  if(texte.includes('[EXTRAIT_TERMINE]') && !G.progression.abonne) {
+  G.progression.nbChoix = (G.progression.nbChoix || 0) + 1;
+
+  if(texte.includes('[EXTRAIT_TERMINE]') && !G.progression.abonne && G.progression.nbChoix >= 3) {
     G.progression.extraitTermine = true;
     sauvegarder();
     setTimeout(() => afficherEcran('screen-paywall'), 2500);
