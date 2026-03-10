@@ -783,10 +783,10 @@ function traiterReponse(texte) {
     const lignes = choixMatch[1].split('\n').filter(l => /^\d[\s—\-]/.test(l.trim()));
     if(lignes.length) {
       const container = document.getElementById('choix-container');
-      container.innerHTML = lignes.map(l => {
+      container.innerHTML = lignes.map((l, i) => {
         const num = l.match(/^(\d)/)[1];
         const txt = l.replace(/^\d[\s—\-]+/, '').trim();
-        return `<button class="choix-btn" onclick="choisir('${txt.replace(/'/g, "\\'")}')"><span class="choix-num">${num}.</span>${txt}</button>`;
+        return `<button class="choix-btn" onclick="choisir(this)"><span class="choix-num">${num}.</span>${txt}</button>`;
       }).join('');
       container.style.display = 'flex';
       setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
@@ -794,8 +794,9 @@ function traiterReponse(texte) {
   }
 }
 
-function choisir(texte) {
+function choisir(btn) {
   if(G.enCours) return;
+  const texte = btn.textContent.replace(/^\d\.\s*/, '').trim();
   envoyerMessage(texte);
 }
 
