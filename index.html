@@ -276,8 +276,8 @@
     .game-body { flex: 1; padding: 32px 0 24px; }
 
     .story-text {
-      font-size: clamp(16px, 2.5vw, 18px);
-      line-height: 1.85;
+      font-size: clamp(18px, 2.8vw, 21px);
+      line-height: 1.9;
       color: var(--texte);
       font-weight: 300;
       margin-bottom: 32px;
@@ -618,6 +618,20 @@ Sexe : ${j.sexe}
 Âge : ${j.age} ans
 ${j.sexe === 'homme' ? 'Ancien flic trahi professionnellement. Une sœur qui s\'inquiète.' : 'Ancienne fliquette ayant dénoncé une corruption et payé le prix. Une mère compliquée.'}
 Acte actuel : ${G.progression.acte} | Scène : ${G.progression.scene}
+
+=== COHÉRENCE NARRATIVE ABSOLUE ===
+- Au début de l'Acte I : ${j.prenom} est DÉJÀ en voiture en route vers Mourèze quand Pierre Vasseur l'appelle. Il ne lui dit pas de venir — il l'appelle pour confirmer son arrivée et donner des détails. Ne jamais écrire que Pierre "demande à ${j.prenom} de venir" — ${j.prenom} est déjà en chemin.
+- Ne jamais créer de contradiction entre ce que le joueur sait et ce que les personnages disent.
+- Ne jamais proposer un choix qui implique une information que le joueur ne peut pas encore connaître.
+- Si un personnage ne parle pas avant un certain acte, il n'apparaît pas du tout avant cet acte.
+
+=== RÈGLES SUR LES CHOIX ===
+- Les 4 choix doivent TOUJOURS être cohérents avec ce que le joueur sait à ce moment précis.
+- Ne jamais proposer un choix qui mentionne un personnage ou un lieu non encore introduit.
+- Ne jamais proposer un choix qui révèle une information secrète avant l'acte prévu.
+- Tous les choix doivent être cliquables et logiques — jamais de choix "piège" impossible à faire.
+- Serge n'apparaît pas avant l'Acte III. Ne pas proposer de choix impliquant Serge avant l'Acte III.
+- Yvette n'apparaît pas avant l'Acte IV. Ne pas proposer de choix impliquant Yvette avant l'Acte IV.
 
 === CE QUE LE JOUEUR SAIT ===
 Sophie est une prédatrice : ${G.savoir.sophieEstPredatrice ? 'OUI' : 'NON — ne pas révéler'}
