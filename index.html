@@ -11,7 +11,6 @@
     :root {
       --bg: #f5f0e8;
       --bg2: #ede7d9;
-      --bg3: #e4dccb;
       --rouge: #8b3a2a;
       --rouge-light: #b04a38;
       --encre: #1a1208;
@@ -24,25 +23,38 @@
     }
 
     html, body {
-      height: 100%;
       background: var(--bg);
       color: var(--texte);
       font-family: var(--font-corps);
       overflow-x: hidden;
     }
 
-    /* ========== ÉCRANS ========== */
-    .screen { display: none; min-height: 100vh; }
-    .screen.active { display: flex; flex-direction: column; }
+    .screen { display: none; min-height: 100vh; flex-direction: column; }
+    .screen.active { display: flex; }
 
-    /* ========== ÉCRAN INTRO ========== */
+    /* ===== LIEN RECIT GAMES ===== */
+    .recitgames-link {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      text-align: center;
+    }
+    .recitgames-link a {
+      color: var(--texte-doux);
+      font-size: 11px;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .recitgames-link a:hover { color: var(--rouge); }
+
+    /* ===== INTRO ===== */
     #screen-intro {
       align-items: center;
       justify-content: center;
       padding: 40px 24px;
       text-align: center;
       background: var(--bg);
-      position: relative;
     }
 
     #screen-intro::before {
@@ -63,7 +75,7 @@
     }
 
     .intro-ornement {
-      font-size: 13px;
+      font-size: 12px;
       letter-spacing: 4px;
       color: var(--rouge);
       text-transform: uppercase;
@@ -83,7 +95,7 @@
 
     .intro-sous-titre {
       font-family: var(--font-titre);
-      font-size: 13px;
+      font-size: 12px;
       letter-spacing: 3px;
       color: var(--texte-doux);
       text-transform: uppercase;
@@ -98,18 +110,8 @@
       width: 200px;
     }
 
-    .intro-separateur-ligne {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .intro-separateur-point {
-      width: 5px;
-      height: 5px;
-      background: var(--rouge);
-      transform: rotate(45deg);
-    }
+    .intro-separateur-ligne { flex: 1; height: 1px; background: var(--border); }
+    .intro-separateur-point { width: 5px; height: 5px; background: var(--rouge); transform: rotate(45deg); }
 
     .intro-accroche {
       font-size: 17px;
@@ -119,32 +121,6 @@
       margin-bottom: 48px;
       font-weight: 300;
     }
-
-    /* Champ clé API */
-    .intro-cle-label {
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--texte-doux);
-      margin-bottom: 10px;
-      text-align: left;
-    }
-
-    .intro-cle-input {
-      width: 100%;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 12px 16px;
-      font-family: monospace;
-      font-size: 13px;
-      color: var(--texte);
-      margin-bottom: 24px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .intro-cle-input:focus { border-color: var(--rouge); }
 
     .btn-principal {
       background: var(--rouge);
@@ -160,7 +136,6 @@
       transition: background 0.2s, transform 0.1s;
       margin-bottom: 12px;
     }
-
     .btn-principal:hover { background: var(--rouge-light); }
     .btn-principal:active { transform: scale(0.98); }
 
@@ -176,27 +151,23 @@
       width: 100%;
       transition: all 0.2s;
     }
-
     .btn-secondaire:hover { border-color: var(--rouge); color: var(--rouge); }
 
     .intro-footer {
       margin-top: 40px;
       font-size: 12px;
       color: var(--texte-doux);
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
-    /* ========== ÉCRAN SETUP ========== */
+    /* ===== SETUP ===== */
     #screen-setup {
       align-items: center;
       justify-content: center;
       padding: 40px 24px;
     }
 
-    .setup-inner {
-      max-width: 480px;
-      width: 100%;
-    }
+    .setup-inner { max-width: 480px; width: 100%; }
 
     .setup-titre {
       font-family: var(--font-titre);
@@ -238,7 +209,6 @@
       text-align: center;
       background: #fff;
     }
-
     .carte-perso:hover { border-color: var(--rouge); }
     .carte-perso.selected { border-color: var(--rouge); background: #fff8f6; }
 
@@ -250,11 +220,7 @@
       margin-bottom: 6px;
     }
 
-    .carte-perso-desc {
-      font-size: 12px;
-      color: var(--texte-doux);
-      line-height: 1.5;
-    }
+    .carte-perso-desc { font-size: 12px; color: var(--texte-doux); line-height: 1.5; }
 
     .setup-input {
       width: 100%;
@@ -269,10 +235,8 @@
       outline: none;
       transition: border-color 0.2s;
     }
-
     .setup-input:focus { border-color: var(--rouge); }
 
-    /* Slider âge */
     .age-display {
       font-family: var(--font-titre);
       font-size: 24px;
@@ -288,10 +252,8 @@
       accent-color: var(--rouge);
     }
 
-    /* ========== ÉCRAN JEU ========== */
+    /* ===== JEU ===== */
     #screen-game {
-      flex-direction: column;
-      min-height: 100vh;
       max-width: 720px;
       margin: 0 auto;
       width: 100%;
@@ -310,13 +272,6 @@
       z-index: 10;
     }
 
-    .game-header-titre {
-      font-family: var(--font-titre);
-      font-size: 18px;
-      font-style: italic;
-      color: var(--encre);
-    }
-
     .game-acte-label {
       font-size: 11px;
       letter-spacing: 2px;
@@ -324,27 +279,25 @@
       color: var(--texte-doux);
     }
 
-    .progression-dots {
-      display: flex;
-      gap: 6px;
-      align-items: center;
+    .game-header-titre {
+      font-family: var(--font-titre);
+      font-size: 18px;
+      font-style: italic;
+      color: var(--encre);
     }
 
+    .progression-dots { display: flex; gap: 6px; align-items: center; }
+
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--border);
       transition: background 0.3s;
     }
-
     .dot.actif { background: var(--rouge); }
     .dot.fait { background: var(--or); }
 
-    .game-body {
-      flex: 1;
-      padding: 32px 0 24px;
-    }
+    .game-body { flex: 1; padding: 32px 0 24px; }
 
     .story-text {
       font-size: clamp(16px, 2.5vw, 18px);
@@ -354,7 +307,6 @@
       margin-bottom: 32px;
       min-height: 60px;
     }
-
     .story-text p { margin-bottom: 16px; }
     .story-text p:last-child { margin-bottom: 0; }
 
@@ -367,10 +319,7 @@
       vertical-align: text-bottom;
       animation: clignote 0.7s step-end infinite;
     }
-
-    @keyframes clignote {
-      50% { opacity: 0; }
-    }
+    @keyframes clignote { 50% { opacity: 0; } }
 
     .choix-container {
       display: flex;
@@ -379,7 +328,6 @@
       margin-top: 32px;
       animation: fadeIn 0.5s ease;
     }
-
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     .choix-btn {
@@ -394,22 +342,23 @@
       cursor: pointer;
       transition: all 0.2s;
       line-height: 1.5;
+      min-height: 48px;
     }
+    .choix-btn:hover { border-color: var(--rouge); background: #fff8f6; color: var(--rouge); }
 
-    .choix-btn:hover {
-      border-color: var(--rouge);
-      background: #fff8f6;
+    .choix-num { color: var(--rouge); font-family: var(--font-titre); font-style: italic; margin-right: 10px; }
+
+    .erreur-jeu {
+      background: #fff0ee;
+      border: 1px solid #e8c0b8;
+      border-radius: 4px;
+      padding: 12px 16px;
+      font-size: 14px;
       color: var(--rouge);
+      margin-top: 16px;
     }
 
-    .choix-num {
-      color: var(--rouge);
-      font-family: var(--font-titre);
-      font-style: italic;
-      margin-right: 10px;
-    }
-
-    /* ========== ÉCRAN PAYWALL ========== */
+    /* ===== PAYWALL ===== */
     #screen-paywall {
       align-items: center;
       justify-content: center;
@@ -417,10 +366,7 @@
       text-align: center;
     }
 
-    .paywall-inner {
-      max-width: 460px;
-      width: 100%;
-    }
+    .paywall-inner { max-width: 460px; width: 100%; }
 
     .paywall-badge {
       display: inline-block;
@@ -437,7 +383,7 @@
 
     .paywall-titre {
       font-family: var(--font-titre);
-      font-size: clamp(28px, 6vw, 42px);
+      font-size: clamp(26px, 6vw, 40px);
       font-style: italic;
       color: var(--encre);
       margin-bottom: 16px;
@@ -448,22 +394,18 @@
       font-size: 16px;
       color: var(--texte-doux);
       line-height: 1.7;
-      margin-bottom: 36px;
+      margin-bottom: 32px;
       font-weight: 300;
     }
 
     .paywall-prix {
       font-family: var(--font-titre);
-      font-size: 48px;
+      font-size: 52px;
       color: var(--rouge);
       margin-bottom: 4px;
     }
 
-    .paywall-prix-label {
-      font-size: 13px;
-      color: var(--texte-doux);
-      margin-bottom: 32px;
-    }
+    .paywall-prix-label { font-size: 13px; color: var(--texte-doux); margin-bottom: 28px; }
 
     .paywall-avantages {
       text-align: left;
@@ -483,10 +425,8 @@
       align-items: center;
       gap: 10px;
     }
-
     .paywall-avantage:last-child { border-bottom: none; }
-
-    .paywall-check { color: var(--rouge); font-size: 16px; }
+    .paywall-check { color: var(--rouge); }
 
     .paywall-deja {
       margin-top: 16px;
@@ -496,52 +436,22 @@
       text-decoration: underline;
     }
 
-    /* ========== ERREUR ========== */
-    .erreur-msg {
-      background: #fff0ee;
-      border: 1px solid #e8c0b8;
-      border-radius: 4px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: var(--rouge);
-      margin-top: 12px;
-      display: none;
-    }
-
-    /* ========== LIEN RECIT GAMES ========== */
-    .recitgames-link {
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 16px;
-      text-align: center;
-    }
-
-    .recitgames-link a {
-      color: var(--texte-doux);
-      font-size: 11px;
-      text-decoration: none;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-family: var(--font-corps);
-    }
-
-    .recitgames-link a:hover { color: var(--rouge); }
-
-    /* ========== RESPONSIVE ========== */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 480px) {
       .choix-perso { grid-template-columns: 1fr; }
       .game-header { padding: 12px 0; }
+      #screen-intro { padding: 32px 16px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Lien retour Récit Games -->
+<!-- Lien retour -->
 <div class="recitgames-link">
   <a href="https://recitgames.vercel.app">◀ RÉCIT GAMES</a>
 </div>
 
-<!-- ========== ÉCRAN INTRO ========== -->
+<!-- ===== INTRO ===== -->
 <div id="screen-intro" class="screen active">
   <div class="intro-inner">
     <div class="intro-ornement">Récit Games · Roman Interactif</div>
@@ -556,19 +466,13 @@
       « Quand tu lis un thriller classique, tu n'as pas le choix.<br>
       Ici, c'est toi qui décides. »
     </div>
-
-    <div class="intro-cle-label">Clé d'accès bêta</div>
-    <input class="intro-cle-input" type="password" id="cle-input" placeholder="sk-ant-api03-..." autocomplete="off"/>
-    <div class="erreur-msg" id="erreur-cle">Clé invalide. Vérifie ta clé d'accès.</div>
-
     <button class="btn-principal" onclick="demarrerNouvellePartie()">Commencer l'enquête</button>
-    <button class="btn-secondaire" id="btn-reprendre" onclick="reprendrePartie()" style="display:none;">Reprendre mon enquête</button>
-
+    <button class="btn-secondaire" id="btn-reprendre" style="display:none;" onclick="reprendrePartie()">Reprendre mon enquête</button>
     <div class="intro-footer">SILENCE · TRAHISON · VÉRITÉ</div>
   </div>
 </div>
 
-<!-- ========== ÉCRAN SETUP ========== -->
+<!-- ===== SETUP ===== -->
 <div id="screen-setup" class="screen">
   <div class="setup-inner">
     <div class="setup-titre">Qui êtes-vous ?</div>
@@ -597,14 +501,14 @@
   </div>
 </div>
 
-<!-- ========== ÉCRAN JEU ========== -->
+<!-- ===== JEU ===== -->
 <div id="screen-game" class="screen">
   <div class="game-header">
     <div>
       <div class="game-acte-label" id="acte-label">Acte I — L'Arrivée</div>
       <div class="game-header-titre">Les Doux Mensonges</div>
     </div>
-    <div class="progression-dots" id="progression-dots">
+    <div class="progression-dots">
       <div class="dot actif"></div>
       <div class="dot"></div>
       <div class="dot"></div>
@@ -612,43 +516,37 @@
       <div class="dot"></div>
     </div>
   </div>
-
   <div class="game-body">
     <div class="story-text" id="story-text"></div>
     <div class="choix-container" id="choix-container" style="display:none;"></div>
   </div>
 </div>
 
-<!-- ========== ÉCRAN PAYWALL ========== -->
+<!-- ===== PAYWALL ===== -->
 <div id="screen-paywall" class="screen">
   <div class="paywall-inner">
     <div class="paywall-badge">Fin de l'extrait gratuit</div>
     <div class="paywall-titre">L'enquête continue...<br>Êtes-vous prêt ?</div>
-    <div class="paywall-texte">
-      Mourèze cache encore ses secrets. La vérité sur Sophie, sur Pierre, sur Marion — tout reste à découvrir. Continuez l'aventure.
-    </div>
+    <div class="paywall-texte">Mourèze cache encore ses secrets. La vérité sur Sophie, sur Pierre, sur Marion — tout reste à découvrir. Continuez l'aventure.</div>
     <div class="paywall-prix">7€</div>
     <div class="paywall-prix-label">par mois · accès à tous les titres Récit Games</div>
-
     <div class="paywall-avantages">
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Les 5 actes complets des Doux Mensonges</div>
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Accès à Kaelthar et tous les futurs jeux</div>
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Narration unique générée pour vous</div>
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Résiliation à tout moment</div>
     </div>
-
     <button class="btn-principal" onclick="window.location.href='https://buy.stripe.com/test_8x2bJ05fU1yV3uKde1bZe00'">
       Continuer l'enquête — 7€/mois
     </button>
-    <div class="paywall-deja" onclick="deja_abonne()">J'ai déjà un abonnement</div>
+    <div class="paywall-deja" onclick="dejaAbonne()">J'ai déjà un abonnement</div>
   </div>
 </div>
 
 <script>
-// ========== ÉTAT DU JEU ==========
 const SAVE_KEY = 'ldm_save_v1';
+
 let G = {
-  apiKey: '',
   joueur: { prenom: 'Alexandre', sexe: 'homme', age: 34 },
   progression: { acte: 1, scene: 1, extraitTermine: false, abonne: false },
   savoir: {
@@ -658,12 +556,6 @@ let G = {
     bernardSaitPourGerard: false,
     marionEtPierreEnContact: false
   },
-  choixCles: {
-    filature: null,
-    sequestration: null,
-    florentSaitPourSerge: false,
-    alleSeulALadresse: false
-  },
   indices: {
     photoMarion: false,
     premierCahier: false,
@@ -672,28 +564,22 @@ let G = {
     franckIdentifie: false,
     adresseGriffonnee: false
   },
-  personnages: {
-    bernard: 'inconnu', florent: 'inconnu', lola: 'inconnu',
-    yvette: 'inconnu', remi: 'inconnu', serge: 'inconnu', bruno: 'inconnu'
-  },
   historique: [],
   streaming: false
 };
 
-// ========== SAUVEGARDE ==========
+// ===== SAUVEGARDE =====
 function sauvegarder() {
-  localStorage.setItem(SAVE_KEY, JSON.stringify(G));
+  const data = Object.assign({}, G);
+  delete data.streaming;
+  localStorage.setItem(SAVE_KEY, JSON.stringify(data));
 }
 
 function charger() {
-  const data = localStorage.getItem(SAVE_KEY);
-  if(data) {
-    try { return JSON.parse(data); } catch(e) { return null; }
-  }
-  return null;
+  try { return JSON.parse(localStorage.getItem(SAVE_KEY)); } catch(e) { return null; }
 }
 
-// ========== INIT ==========
+// ===== INIT =====
 window.onload = function() {
   const save = charger();
   if(save && save.joueur && save.joueur.prenom) {
@@ -702,39 +588,27 @@ window.onload = function() {
 };
 
 function demarrerNouvellePartie() {
-  const cle = document.getElementById('cle-input').value.trim();
-  if(!cle || !cle.startsWith('sk-ant-')) {
-    document.getElementById('erreur-cle').style.display = 'block';
-    return;
-  }
-  document.getElementById('erreur-cle').style.display = 'none';
-  G.apiKey = cle;
+  localStorage.removeItem(SAVE_KEY);
+  G.historique = [];
   afficherEcran('screen-setup');
 }
 
 function reprendrePartie() {
-  const cle = document.getElementById('cle-input').value.trim();
-  if(!cle || !cle.startsWith('sk-ant-')) {
-    document.getElementById('erreur-cle').style.display = 'block';
-    return;
-  }
   const save = charger();
   if(save) {
-    G = save;
-    G.apiKey = cle;
+    Object.assign(G, save);
     G.streaming = false;
     if(G.progression.extraitTermine && !G.progression.abonne) {
       afficherEcran('screen-paywall');
     } else {
       afficherEcran('screen-game');
       majProgression();
-      // Reprend l'histoire
-      envoyerMessage('Résume brièvement où nous en sommes et continue l\'histoire depuis le dernier moment.');
+      envoyerMessage('Résume en une phrase où j\'en suis et continue l\'histoire.');
     }
   }
 }
 
-// ========== SETUP ==========
+// ===== SETUP =====
 let sexeChoisi = 'homme';
 
 function choisirSexe(sexe, el) {
@@ -756,64 +630,64 @@ function lancerJeu() {
   sauvegarder();
   afficherEcran('screen-game');
   majProgression();
-  // Lance la première scène
-  envoyerMessage('Commence l\'Acte I Scène 1 — La route vers Mourèze.');
+  envoyerMessage('Commence l\'Acte I Scène 1 — La route vers Mourèze. Pierre Vasseur appelle au téléphone.');
 }
 
-// ========== PROGRESSION ==========
+// ===== PROGRESSION =====
 function majProgression() {
-  const actes = ['Acte I — L\'Arrivée', 'Acte II — Les Premières Fissures', 'Acte III — La Vérité qui Remonte', 'Acte IV — L\'Effondrement', 'Acte V — Les Doux Mensonges'];
+  const actes = [
+    'Acte I — L\'Arrivée',
+    'Acte II — Les Premières Fissures',
+    'Acte III — La Vérité qui Remonte',
+    'Acte IV — L\'Effondrement',
+    'Acte V — Les Doux Mensonges'
+  ];
   document.getElementById('acte-label').textContent = actes[G.progression.acte - 1] || actes[0];
-  const dots = document.querySelectorAll('.dot');
-  dots.forEach((dot, i) => {
+  document.querySelectorAll('.dot').forEach((dot, i) => {
     dot.className = 'dot';
     if(i < G.progression.acte - 1) dot.classList.add('fait');
     else if(i === G.progression.acte - 1) dot.classList.add('actif');
   });
 }
 
-// ========== SYSTÈME PROMPT ==========
+// ===== SYSTÈME PROMPT =====
 function buildSystemPrompt() {
   const j = G.joueur;
-  const pronom = j.sexe === 'femme' ? 'elle' : 'il';
-  const detective = j.sexe === 'femme' ? 'détective' : 'détective';
+  return `Tu es le narrateur de "Les Doux Mensonges" — un roman policier interactif français. Tu écris avec la densité de Franck Thilliez et les twists psychologiques de Freida McFadden. Tu n'es pas un assistant — tu es un auteur.
 
-  return `Tu es le narrateur de "Les Doux Mensonges" — un roman policier interactif français. Tu écris avec la densité de Franck Thilliez et les twists de Freida McFadden. Tu n'es pas un assistant — tu es un auteur.
-
-STYLE : Prose dense, phrases courtes en tension, détails sensoriels concrets. Atmosphère froide et silencieuse. Automne à Mourèze. Jamais générique.
-LANGUE : Toujours en français. Toujours à la deuxième personne du singulier.
-LONGUEUR : 150 à 300 mots par réponse.
+STYLE : Prose dense et froide. Phrases courtes en tension. Détails sensoriels concrets. Automne à Mourèze — ville silencieuse et secrète. Jamais générique.
+LANGUE : Toujours en français. Toujours à la deuxième personne du singulier ("tu entres", "tu vois").
+LONGUEUR : 150 à 300 mots par réponse narrative.
 
 === PROTAGONISTE ===
 Prénom : ${j.prenom}
 Sexe : ${j.sexe}
 Âge : ${j.age} ans
-${j.sexe === 'homme' ? 'Ancien flic trahi professionnellement. Une sœur qui s\'inquiète.' : 'Ancienne fliquette qui a dénoncé une corruption et payé le prix. Une mère compliquée.'}
+${j.sexe === 'homme' ? 'Ancien flic trahi professionnellement. Une sœur qui s\'inquiète.' : 'Ancienne fliquette ayant dénoncé une corruption et payé le prix. Une mère compliquée.'}
 Acte actuel : ${G.progression.acte} | Scène : ${G.progression.scene}
 
 === CE QUE LE JOUEUR SAIT ===
-Sophie est une prédatrice : ${G.savoir.sophieEstPredatrice ? 'OUI' : 'NON'}
-Marion est morte : ${G.savoir.marionEstMorte ? 'OUI' : 'NON'}
-Pierre a menti : ${G.savoir.pierreAMenti ? 'OUI' : 'NON'}
-Bernard sait pour Gérard : ${G.savoir.bernardSaitPourGerard ? 'OUI' : 'NON'}
-Marion et Pierre en contact : ${G.savoir.marionEtPierreEnContact ? 'OUI — RÉVÉLER SEULEMENT ACTE V SCÈNE 4' : 'NON — NE PAS RÉVÉLER'}
+Sophie est une prédatrice : ${G.savoir.sophieEstPredatrice ? 'OUI' : 'NON — ne pas révéler'}
+Marion est morte : ${G.savoir.marionEstMorte ? 'OUI' : 'NON — ne pas révéler'}
+Pierre a menti : ${G.savoir.pierreAMenti ? 'OUI' : 'NON — ne pas révéler'}
+Marion et Pierre en contact : ${G.savoir.marionEtPierreEnContact ? 'OUI' : 'NON — révéler UNIQUEMENT Acte V Scène 4'}
 
 === INDICES TROUVÉS ===
-Photo Marion : ${G.indices.photoMarion ? 'OUI' : 'NON'}
-Premier cahier : ${G.indices.premierCahier ? 'OUI' : 'NON'}
-Deuxième cahier : ${G.indices.deuxiemeCahier ? 'OUI' : 'NON'}
+Photo Marion/Franck : ${G.indices.photoMarion ? 'OUI' : 'NON'}
+Premier cahier Marion : ${G.indices.premierCahier ? 'OUI' : 'NON'}
+Deuxième cahier Marion : ${G.indices.deuxiemeCahier ? 'OUI' : 'NON'}
 Boîte de preuves : ${G.indices.boitePreuves ? 'OUI' : 'NON'}
 Adresse griffonnée : ${G.indices.adresseGriffonnee ? 'OUI' : 'NON'}
 
 === FAITS IMMUABLES — NE JAMAIS CONTREDIRE ===
 - Pierre Vasseur a reçu le dossier de Marion 3 semaines avant d'engager le détective.
-- Pierre est allé voir Sophie la nuit avant sa disparition — confrontation, pas meurtre ce soir-là.
-- Pierre connaissait l'adresse de la cachette — c'est lui qui a envoyé le message anonyme.
-- Pierre disparaît après avoir tué Sophie — il ne se livre pas à la police.
+- Pierre est allé voir Sophie la nuit avant sa disparition — confrontation seulement.
+- Pierre a tué Sophie à la cachette — NE RÉVÉLER QU'EN ACTE V.
+- Pierre disparaît après avoir tué Sophie — ne se livre pas.
 - Marion est morte AVANT l'arrivée du détective à Mourèze.
 - Marion et Pierre étaient en contact — NE RÉVÉLER QU'EN ACTE V SCÈNE 4.
 - Sophie ne peut jamais être trouvée vivante.
-- Bernard a classé Gérard en accident domestique après la visite de Pierre.
+- Bernard a classé Gérard en accident après la visite de Pierre.
 - L'homme sur la photo chez Marion = Franck (victime de Sophie).
 - Lola est la seule à avoir vu Marion suivre Sophie la nuit.
 - Serge ne parle de Sophie qu'à partir de l'Acte III.
@@ -821,20 +695,19 @@ Adresse griffonnée : ${G.indices.adresseGriffonnee ? 'OUI' : 'NON'}
 - Pierre est présenté comme père brisé et sincère jusqu'à la fin de l'Acte IV.
 - Florent ne révèle jamais d'information volontairement.
 
-=== PHRASE CLÉ DE PIERRE VASSEUR ===
-Cette phrase ouvre ET ferme sa lettre. C'est aussi la première chose qu'il dit au détective au téléphone :
+=== PHRASE CLÉ DE PIERRE ===
+Première chose qu'il dit au téléphone ET phrase qui ouvre et ferme sa lettre :
 "Il y a des choses qu'on ne peut pas laisser continuer."
 
 === RÈGLES ABSOLUES ===
 - JAMAIS révéler que Pierre a tué Sophie avant l'Acte V.
 - JAMAIS révéler que Marion et Pierre étaient en contact avant l'Acte V Scène 4.
 - JAMAIS présenter Sophie comme victime après l'Acte III.
-- Florent ne révèle jamais d'information volontairement.
-- Serge ne parle qu'à partir de l'Acte III.
+- Serge ne parle de Sophie qu'à partir de l'Acte III.
 - Yvette ne parle qu'à partir de l'Acte IV.
 
-=== FORMAT RÉPONSE ===
-Narration prose PUIS exactement 4 choix numérotés comme ceci :
+=== FORMAT DE RÉPONSE ===
+Narration prose PUIS exactement 4 choix numérotés :
 [ CHOIX ]
 1 — premier choix
 2 — deuxième choix
@@ -842,23 +715,27 @@ Narration prose PUIS exactement 4 choix numérotés comme ceci :
 4 — quatrième choix
 
 === SIGNAL PAYWALL ===
-À la fin de l'Acte I Scène 1 UNIQUEMENT, après les 4 choix, ajoute exactement : [EXTRAIT_TERMINE]
+À la fin de l'Acte I Scène 1 UNIQUEMENT, après les 4 choix, ajoute exactement sur une nouvelle ligne : [EXTRAIT_TERMINE]
 
-=== MISE À JOUR ÉTAT ===
-Quand le joueur découvre un fait important, ajoute ces tags en fin de réponse :
-[SAVOIR:sophieEstPredatrice] [SAVOIR:marionEstMorte] [SAVOIR:pierreAMenti] [INDICE:photoMarion] [INDICE:premierCahier] [INDICE:deuxiemeCahier] [INDICE:boitePreuves] [INDICE:adresseGriffonnee] [ACTE:2] [SCENE:2]`.trim();
+=== TAGS DE MISE À JOUR ===
+Quand le joueur découvre un fait important, ajoute ces tags en toute fin de réponse (après les choix) :
+[SAVOIR:sophieEstPredatrice] [SAVOIR:marionEstMorte] [SAVOIR:pierreAMenti] [SAVOIR:bernardSaitPourGerard] [SAVOIR:marionEtPierreEnContact]
+[INDICE:photoMarion] [INDICE:premierCahier] [INDICE:deuxiemeCahier] [INDICE:boitePreuves] [INDICE:adresseGriffonnee]
+[ACTE:2] [SCENE:3] — pour mettre à jour l'acte et la scène`.trim();
 }
 
-// ========== APPEL API ==========
+// ===== APPEL API VIA /api/chat =====
 async function envoyerMessage(contenu) {
   if(G.streaming) return;
   G.streaming = true;
 
-  document.getElementById('choix-container').style.display = 'none';
-  document.getElementById('choix-container').innerHTML = '';
+  const choixContainer = document.getElementById('choix-container');
+  choixContainer.style.display = 'none';
+  choixContainer.innerHTML = '';
 
   const storyEl = document.getElementById('story-text');
   storyEl.innerHTML = '<span class="curseur"></span>';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
   G.historique.push({ role: 'user', content: contenu });
   if(G.historique.length > 30) G.historique = G.historique.slice(-30);
@@ -866,14 +743,9 @@ async function envoyerMessage(contenu) {
   let texteAccumule = '';
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': G.apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'messages-2023-12-15'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
@@ -883,7 +755,7 @@ async function envoyerMessage(contenu) {
       })
     });
 
-    if(!response.ok) throw new Error('Erreur API');
+    if(!response.ok) throw new Error('Erreur ' + response.status);
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
@@ -892,56 +764,62 @@ async function envoyerMessage(contenu) {
       const { done, value } = await reader.read();
       if(done) break;
       const chunk = decoder.decode(value);
-      const lines = chunk.split('\n');
-      for(const line of lines) {
-        if(line.startsWith('data: ')) {
-          const data = line.slice(6).trim();
-          if(data === '[DONE]') continue;
-          try {
-            const parsed = JSON.parse(data);
-            if(parsed.type === 'content_block_delta' && parsed.delta?.text) {
-              texteAccumule += parsed.delta.text;
-              afficherTexteStream(texteAccumule);
-            }
-          } catch(e) {}
-        }
+      for(const line of chunk.split('\n')) {
+        if(!line.startsWith('data: ')) continue;
+        const data = line.slice(6).trim();
+        if(data === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(data);
+          if(parsed.type === 'content_block_delta' && parsed.delta?.text) {
+            texteAccumule += parsed.delta.text;
+            afficherStream(texteAccumule);
+          }
+        } catch(e) {}
       }
     }
 
-    // Traitement final
     traiterReponse(texteAccumule);
     G.historique.push({ role: 'assistant', content: texteAccumule });
     sauvegarder();
 
   } catch(err) {
-    storyEl.innerHTML = '<p style="color:var(--rouge);">Une erreur est survenue. Vérifiez votre clé d\'accès.</p>';
+    storyEl.innerHTML = `<div class="erreur-jeu">Une erreur est survenue. Réessayez.</div>`;
   }
 
   G.streaming = false;
 }
 
-function afficherTexteStream(texte) {
-  const storyEl = document.getElementById('story-text');
-  // Nettoie les tags et affiche
-  const propre = texte
-    .replace(/\[CHOIX\][\s\S]*$/i, '')
+function nettoyer(texte) {
+  return texte
+    .replace(/\[\s*CHOIX\s*\][\s\S]*/i, '')
     .replace(/\[EXTRAIT_TERMINE\]/g, '')
     .replace(/\[SAVOIR:[^\]]+\]/g, '')
     .replace(/\[INDICE:[^\]]+\]/g, '')
     .replace(/\[ACTE:\d+\]/g, '')
     .replace(/\[SCENE:\d+\]/g, '')
     .trim();
-  storyEl.innerHTML = propre.split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('') + '<span class="curseur"></span>';
+}
+
+function afficherStream(texte) {
+  const storyEl = document.getElementById('story-text');
+  const propre = nettoyer(texte);
+  storyEl.innerHTML = propre.split('\n\n')
+    .filter(p => p.trim())
+    .map(p => `<p>${p.trim()}</p>`)
+    .join('') + '<span class="curseur"></span>';
 }
 
 function traiterReponse(texte) {
   const storyEl = document.getElementById('story-text');
 
-  // Mise à jour état
+  // Mise à jour savoir
   if(texte.includes('[SAVOIR:sophieEstPredatrice]')) G.savoir.sophieEstPredatrice = true;
   if(texte.includes('[SAVOIR:marionEstMorte]')) G.savoir.marionEstMorte = true;
   if(texte.includes('[SAVOIR:pierreAMenti]')) G.savoir.pierreAMenti = true;
   if(texte.includes('[SAVOIR:bernardSaitPourGerard]')) G.savoir.bernardSaitPourGerard = true;
+  if(texte.includes('[SAVOIR:marionEtPierreEnContact]')) G.savoir.marionEtPierreEnContact = true;
+
+  // Mise à jour indices
   if(texte.includes('[INDICE:photoMarion]')) G.indices.photoMarion = true;
   if(texte.includes('[INDICE:premierCahier]')) G.indices.premierCahier = true;
   if(texte.includes('[INDICE:deuxiemeCahier]')) G.indices.deuxiemeCahier = true;
@@ -954,36 +832,22 @@ function traiterReponse(texte) {
   const sceneMatch = texte.match(/\[SCENE:(\d+)\]/);
   if(sceneMatch) G.progression.scene = parseInt(sceneMatch[1]);
 
+  // Affiche le texte propre
+  const propre = nettoyer(texte);
+  storyEl.innerHTML = propre.split('\n\n')
+    .filter(p => p.trim())
+    .map(p => `<p>${p.trim()}</p>`)
+    .join('');
+
   // Paywall
   if(texte.includes('[EXTRAIT_TERMINE]') && !G.progression.abonne) {
     G.progression.extraitTermine = true;
     sauvegarder();
-    // Affiche le texte final puis redirige
-    const propre = texte
-      .replace(/\[CHOIX\][\s\S]*$/i, '')
-      .replace(/\[EXTRAIT_TERMINE\]/g, '')
-      .replace(/\[SAVOIR:[^\]]+\]/g, '')
-      .replace(/\[INDICE:[^\]]+\]/g, '')
-      .replace(/\[ACTE:\d+\]/g, '')
-      .replace(/\[SCENE:\d+\]/g, '')
-      .trim();
-    storyEl.innerHTML = propre.split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
-    setTimeout(() => afficherEcran('screen-paywall'), 2000);
+    setTimeout(() => afficherEcran('screen-paywall'), 2500);
     return;
   }
 
-  // Affiche le texte propre
-  const propre = texte
-    .replace(/\[CHOIX\][\s\S]*$/i, '')
-    .replace(/\[EXTRAIT_TERMINE\]/g, '')
-    .replace(/\[SAVOIR:[^\]]+\]/g, '')
-    .replace(/\[INDICE:[^\]]+\]/g, '')
-    .replace(/\[ACTE:\d+\]/g, '')
-    .replace(/\[SCENE:\d+\]/g, '')
-    .trim();
-  storyEl.innerHTML = propre.split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
-
-  // Extrait les choix
+  // Choix
   const choixMatch = texte.match(/\[\s*CHOIX\s*\]([\s\S]*?)(?=\[EXTRAIT|\[SAVOIR|\[INDICE|\[ACTE|\[SCENE|$)/i);
   if(choixMatch) {
     const lignes = choixMatch[1].split('\n').filter(l => /^\d[\s—\-]/.test(l.trim()));
@@ -995,8 +859,7 @@ function traiterReponse(texte) {
         return `<button class="choix-btn" onclick="choisir('${txt.replace(/'/g, "\\'")}')"><span class="choix-num">${num}.</span>${txt}</button>`;
       }).join('');
       container.style.display = 'flex';
-      // Scroll vers les choix
-      setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+      setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
     }
   }
 }
@@ -1006,19 +869,15 @@ function choisir(texte) {
   envoyerMessage(texte);
 }
 
-function deja_abonne() {
-  const cle = prompt('Entre ta clé d\'accès premium :');
-  if(cle && cle.startsWith('sk-ant-')) {
-    G.apiKey = cle;
-    G.progression.abonne = true;
-    sauvegarder();
-    afficherEcran('screen-game');
-    majProgression();
-    envoyerMessage('Le joueur a un abonnement premium. Continue l\'histoire depuis où nous en étions.');
-  }
+function dejaAbonne() {
+  G.progression.abonne = true;
+  sauvegarder();
+  afficherEcran('screen-game');
+  majProgression();
+  envoyerMessage('Le joueur a un abonnement. Continue l\'histoire depuis l\'Acte I Scène 2.');
 }
 
-// ========== NAVIGATION ==========
+// ===== NAVIGATION =====
 function afficherEcran(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
