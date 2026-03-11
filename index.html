@@ -48,101 +48,221 @@
     .recitgames-link a:hover { color: var(--rouge); }
 
     #screen-intro {
+      position: relative;
+      min-height: 100vh;
+      background: #0a0806;
+      overflow: hidden;
       align-items: center;
       justify-content: center;
-      padding: 40px 24px;
-      text-align: center;
     }
 
+    /* Fond atmosphérique */
+    .couv-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 85%, rgba(100,25,10,0.45) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 50%, rgba(80,30,10,0.15) 0%, transparent 45%),
+        linear-gradient(170deg, #0f0c09 0%, #160e08 45%, #0a0604 100%);
+      z-index: 0;
+    }
+
+    /* Silhouette toits de Mourèze */
+    .couv-ville {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 42%;
+      z-index: 1;
+    }
+
+    /* Brume basse */
+    .couv-brume {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 22%;
+      background: linear-gradient(to top, #0a0806 0%, rgba(10,8,6,0.7) 60%, transparent 100%);
+      z-index: 2;
+      animation: brumeDrift 10s ease-in-out infinite alternate;
+    }
+    @keyframes brumeDrift {
+      0% { transform: scaleX(1); opacity: 0.9; }
+      100% { transform: scaleX(1.04); opacity: 1; }
+    }
+
+    /* Lumières fenêtres */
+    .couv-lumieres {
+      position: absolute;
+      bottom: 18%;
+      left: 0;
+      right: 0;
+      height: 20%;
+      z-index: 3;
+    }
+
+    .couv-lumiere {
+      position: absolute;
+      background: rgba(255,190,80,0.55);
+      box-shadow: 0 0 10px 3px rgba(255,160,40,0.25);
+      animation: lumiereFlicker 3s ease-in-out infinite alternate;
+    }
+    @keyframes lumiereFlicker {
+      0% { opacity: 0.35; }
+      100% { opacity: 0.75; }
+    }
+
+    /* Grain texture */
+    .couv-grain {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+    }
+
+    /* Contenu */
     .intro-inner {
-      max-width: 500px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 32px;
+      max-width: 520px;
       width: 100%;
     }
 
-    .intro-ornement {
-      font-size: 12px;
-      letter-spacing: 4px;
-      color: var(--rouge);
+    .intro-editeur {
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: rgba(255,255,255,0.2);
       text-transform: uppercase;
-      margin-bottom: 32px;
-      opacity: 0.7;
+      margin-bottom: 44px;
+      animation: fadeUp 0.9s ease 0.1s both;
     }
 
     .intro-titre {
       font-family: var(--font-titre);
-      font-size: clamp(38px, 10vw, 68px);
+      font-size: clamp(54px, 14vw, 100px);
       font-weight: 400;
       font-style: italic;
-      color: var(--encre);
-      line-height: 1.1;
-      margin-bottom: 12px;
+      color: #efe5d2;
+      line-height: 0.92;
+      letter-spacing: -2px;
+      margin-bottom: 4px;
+      text-shadow: 0 4px 60px rgba(0,0,0,0.9);
+      animation: fadeUp 0.9s ease 0.3s both;
     }
 
-    .intro-sous-titre {
+    .intro-titre2 {
       font-family: var(--font-titre);
-      font-size: 12px;
-      letter-spacing: 3px;
-      color: var(--texte-doux);
-      text-transform: uppercase;
-      margin-bottom: 40px;
+      font-size: clamp(54px, 14vw, 100px);
+      font-weight: 700;
+      font-style: normal;
+      color: #efe5d2;
+      line-height: 0.92;
+      letter-spacing: -2px;
+      margin-bottom: 36px;
+      text-shadow: 0 4px 60px rgba(0,0,0,0.9);
+      animation: fadeUp 0.9s ease 0.4s both;
     }
 
-    .intro-separateur {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 0 auto 40px;
-      width: 200px;
+    .intro-filet {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, transparent, rgba(180,80,50,0.8), transparent);
+      margin: 0 auto 24px;
+      animation: fadeUp 0.9s ease 0.5s both;
     }
-    .intro-separateur-ligne { flex: 1; height: 1px; background: var(--border); }
-    .intro-separateur-point { width: 5px; height: 5px; background: var(--rouge); transform: rotate(45deg); }
+
+    .intro-lieu {
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: rgba(210,170,120,0.45);
+      text-transform: uppercase;
+      margin-bottom: 44px;
+      animation: fadeUp 0.9s ease 0.6s both;
+    }
 
     .intro-accroche {
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--texte-doux);
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(220,195,160,0.45);
       font-style: italic;
-      margin-bottom: 48px;
+      margin-bottom: 52px;
       font-weight: 300;
+      max-width: 340px;
+      animation: fadeUp 0.9s ease 0.7s both;
     }
 
     .btn-principal {
-      background: var(--rouge);
-      color: #fff;
-      border: none;
-      padding: 16px 40px;
+      background: transparent;
+      color: rgba(240,228,210,0.9);
+      border: 1px solid rgba(240,228,210,0.25);
+      padding: 15px 48px;
       font-family: var(--font-titre);
-      font-size: 16px;
+      font-size: 15px;
       font-style: italic;
+      letter-spacing: 1px;
       cursor: pointer;
-      border-radius: 3px;
       width: 100%;
-      transition: background 0.2s, transform 0.1s;
-      margin-bottom: 12px;
+      max-width: 300px;
+      transition: all 0.3s;
+      margin-bottom: 14px;
+      animation: fadeUp 0.9s ease 0.85s both;
+      position: relative;
+      overflow: hidden;
     }
-    .btn-principal:hover { background: var(--rouge-light); }
+    .btn-principal::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(139,58,42,0.6);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+      z-index: -1;
+    }
+    .btn-principal:hover { border-color: rgba(180,80,50,0.6); }
+    .btn-principal:hover::after { transform: scaleX(1); }
     .btn-principal:active { transform: scale(0.98); }
-    .btn-principal:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-principal:disabled { opacity: 0.3; cursor: not-allowed; }
 
     .btn-secondaire {
       background: transparent;
-      color: var(--texte-doux);
-      border: 1px solid var(--border);
-      padding: 12px 40px;
+      color: rgba(200,170,120,0.35);
+      border: none;
+      padding: 8px 24px;
       font-family: var(--font-corps);
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
-      border-radius: 3px;
       width: 100%;
-      transition: all 0.2s;
+      max-width: 300px;
+      transition: color 0.2s;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      animation: fadeUp 0.9s ease 0.95s both;
     }
-    .btn-secondaire:hover { border-color: var(--rouge); color: var(--rouge); }
+    .btn-secondaire:hover { color: rgba(220,190,150,0.7); }
 
     .intro-footer {
-      margin-top: 40px;
-      font-size: 12px;
-      color: var(--texte-doux);
-      opacity: 0.5;
+      margin-top: 48px;
+      font-size: 9px;
+      letter-spacing: 5px;
+      color: rgba(255,255,255,0.1);
+      text-transform: uppercase;
+      animation: fadeUp 0.9s ease 1.05s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     #screen-setup {
@@ -413,22 +533,81 @@
 </div>
 
 <div id="screen-intro" class="screen active">
+  <!-- Décors -->
+  <div class="couv-bg"></div>
+  <div class="couv-ville">
+    <svg viewBox="0 0 1200 500" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Silhouette village Mourèze — toits, clocher, arbres dénudés -->
+      <g fill="#0a0806">
+        <!-- Colline gauche -->
+        <path d="M0,500 Q80,380 160,360 Q200,350 240,370 L240,500Z"/>
+        <!-- Maisons gauche -->
+        <rect x="60" y="390" width="30" height="60"/>
+        <polygon points="60,390 90,390 75,365"/>
+        <rect x="100" y="400" width="25" height="55"/>
+        <polygon points="100,400 125,400 112,378"/>
+        <!-- Clocher central -->
+        <rect x="560" y="280" width="22" height="160"/>
+        <polygon points="560,280 582,280 571,250"/>
+        <rect x="565" y="310" width="12" height="18"/>
+        <!-- Maisons centre -->
+        <rect x="480" y="360" width="35" height="90"/>
+        <polygon points="480,360 515,360 497,335"/>
+        <rect x="520" y="370" width="28" height="80"/>
+        <polygon points="520,370 548,370 534,348"/>
+        <rect x="590" y="365" width="32" height="85"/>
+        <polygon points="590,365 622,365 606,342"/>
+        <rect x="630" y="375" width="26" height="75"/>
+        <polygon points="630,375 656,375 643,354"/>
+        <!-- Maisons droite -->
+        <rect x="900" y="390" width="30" height="65"/>
+        <polygon points="900,390 930,390 915,368"/>
+        <rect x="940" y="380" width="35" height="75"/>
+        <polygon points="940,380 975,380 957,355"/>
+        <rect x="1050" y="400" width="28" height="55"/>
+        <polygon points="1050,400 1078,400 1064,378"/>
+        <!-- Colline droite -->
+        <path d="M1000,500 Q1080,370 1150,355 Q1180,348 1200,360 L1200,500Z"/>
+        <!-- Arbres dénudés -->
+        <line x1="300" y1="500" x2="300" y2="380" stroke="#0a0806" stroke-width="4"/>
+        <line x1="300" y1="420" x2="275" y2="395" stroke="#0a0806" stroke-width="2"/>
+        <line x1="300" y1="410" x2="322" y2="388" stroke="#0a0806" stroke-width="2"/>
+        <line x1="300" y1="400" x2="285" y2="380" stroke="#0a0806" stroke-width="1.5"/>
+        <line x1="760" y1="500" x2="760" y2="370" stroke="#0a0806" stroke-width="3"/>
+        <line x1="760" y1="415" x2="738" y2="392" stroke="#0a0806" stroke-width="2"/>
+        <line x1="760" y1="405" x2="780" y2="385" stroke="#0a0806" stroke-width="1.5"/>
+        <line x1="820" y1="500" x2="820" y2="385" stroke="#0a0806" stroke-width="3"/>
+        <line x1="820" y1="420" x2="800" y2="400" stroke="#0a0806" stroke-width="2"/>
+        <line x1="820" y1="410" x2="838" y2="393" stroke="#0a0806" stroke-width="1.5"/>
+        <!-- Sol -->
+        <rect x="0" y="440" width="1200" height="60"/>
+      </g>
+      <!-- Lumières fenêtres -->
+      <rect x="488" y="375" width="8" height="11" fill="rgba(255,190,80,0.5)" rx="1"/>
+      <rect x="497" y="378" width="6" height="9" fill="rgba(255,180,60,0.35)" rx="1"/>
+      <rect x="530" y="382" width="7" height="10" fill="rgba(255,195,90,0.45)" rx="1"/>
+      <rect x="600" y="376" width="8" height="11" fill="rgba(255,185,70,0.4)" rx="1"/>
+      <rect x="638" y="386" width="6" height="9" fill="rgba(255,190,80,0.35)" rx="1"/>
+      <rect x="908" y="400" width="7" height="10" fill="rgba(255,185,70,0.4)" rx="1"/>
+      <rect x="950" y="390" width="8" height="12" fill="rgba(255,195,85,0.45)" rx="1"/>
+    </svg>
+  </div>
+  <div class="couv-brume"></div>
+  <div class="couv-grain"></div>
+
+  <!-- Contenu -->
   <div class="intro-inner">
-    <div class="intro-ornement">Récit Games · Roman Interactif</div>
-    <div class="intro-titre">Les Doux<br>Mensonges</div>
-    <div class="intro-sous-titre">Une enquête · Mourèze · Automne</div>
-    <div class="intro-separateur">
-      <div class="intro-separateur-ligne"></div>
-      <div class="intro-separateur-point"></div>
-      <div class="intro-separateur-ligne"></div>
-    </div>
+    <div class="intro-editeur">Récit Games · Roman Interactif</div>
+    <div class="intro-titre">Les doux</div>
+    <div class="intro-titre2">Mensonges</div>
+    <div class="intro-filet"></div>
+    <div class="intro-lieu">Mourèze · Automne · Une disparition</div>
     <div class="intro-accroche">
-      « Quand tu lis un thriller classique, tu n'as pas le choix.<br>
-      Ici, c'est toi qui décides. »
+      « Il y a des choses qu'on ne peut pas<br>laisser continuer. »
     </div>
     <button class="btn-principal" onclick="demarrerNouvellePartie()">Commencer l'enquête</button>
     <button class="btn-secondaire" id="btn-reprendre" style="display:none;" onclick="reprendrePartie()">Reprendre mon enquête</button>
-    <div class="intro-footer">SILENCE · TRAHISON · VÉRITÉ</div>
+    <div class="intro-footer">Silence · Trahison · Vérité</div>
   </div>
 </div>
 
