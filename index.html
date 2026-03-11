@@ -559,7 +559,13 @@ function reprendrePartie() {
     } else {
       afficherEcran('screen-game');
       majProgression();
-      envoyerMessage('Résume en une phrase où j\'en suis et continue l\'histoire.');
+      // Affiche le dernier texte de l'IA directement sans rappel API
+      const dernierAssistant = G.historique.filter(m => m.role === 'assistant').pop();
+      if(dernierAssistant) {
+        traiterReponse(dernierAssistant.content);
+      } else {
+        envoyerMessage('Continue l\'histoire.');
+      }
     }
   }
 }
