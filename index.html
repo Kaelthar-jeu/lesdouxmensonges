@@ -710,6 +710,8 @@ async function envoyerMessage(contenu) {
   G.historique.push({ role: 'user', content: contenu });
   if(G.historique.length > 30) G.historique = G.historique.slice(-30);
 
+  let texteAccumule = '';
+
   try {
     const response = await fetch('/api/chat', {
       method: 'POST',
@@ -717,7 +719,6 @@ async function envoyerMessage(contenu) {
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
-        stream: false,
         system: buildSystemPrompt(),
         messages: G.historique
       })
@@ -725,14 +726,35 @@ async function envoyerMessage(contenu) {
 
     if(!response.ok) throw new Error('Erreur ' + response.status);
 
-    const data = await response.json();
-    const texte = data?.content?.filter(b => b.type === 'text').map(b => b.text).join('\n').trim() || '';
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let premierChunk = true;
 
-    if(!texte) throw new Error('Réponse vide');
+    while(true) {
+      const { done, value } = await reader.read();
+      if(done) break;
+      const chunk = decoder.decode(value);
+      for(const line of chunk.split('\n')) {
+        if(!line.startsWith('data: ')) continue;
+        const data = line.slice(6).trim();
+        if(data === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(data);
+          if(parsed.type === 'content_block_delta' && parsed.delta?.text) {
+            if(premierChunk) {
+              storyEl.innerHTML = '';
+              premierChunk = false;
+            }
+            texteAccumule += parsed.delta.text;
+            afficherStream(texteAccumule);
+          }
+        } catch(e) {}
+      }
+    }
 
-    traiterReponse(texte);
+    traiterReponse(texteAccumule);
     window.scrollTo(0, 0);
-    G.historique.push({ role: 'assistant', content: texte });
+    G.historique.push({ role: 'assistant', content: texteAccumule });
     sauvegarder();
 
   } catch(err) {
@@ -741,6 +763,12 @@ async function envoyerMessage(contenu) {
   }
 
   G.enCours = false;
+}
+
+function afficherStream(texte) {
+  const storyEl = document.getElementById('story-text');
+  const propre = nettoyer(texte);
+  storyEl.innerHTML = propre.split('\n\n').filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('') + '<span style="display:inline-block;width:2px;height:1em;background:var(--rouge);margin-left:2px;vertical-align:text-bottom;animation:clignote 0.7s step-end infinite;"></span>';
 }
 
 function nettoyer(texte) {
