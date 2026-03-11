@@ -965,7 +965,7 @@ function traiterReponse(texte) {
 
   G.progression.nbChoix = (G.progression.nbChoix || 0) + 1;
 
-  if(texte.includes('[EXTRAIT_TERMINE]') && !G.progression.abonne && G.progression.nbChoix >= 3) {
+  if(!G.progression.abonne && G.progression.nbChoix >= 20) {
     G.progression.extraitTermine = true;
     sauvegarder();
     setTimeout(() => afficherEcran('screen-paywall'), 2500);
