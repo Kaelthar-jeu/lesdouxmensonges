@@ -1,5 +1,7 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+export const config = { runtime: 'edge' };
+
+export default async function handler(req) {
+  const body = await req.json();
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -8,8 +10,12 @@ export default async function handler(req, res) {
       'anthropic-version': '2023-06-01',
       'anthropic-beta': 'messages-2023-12-15'
     },
-    body: JSON.stringify(req.body)
+    body: JSON.stringify({ ...body, stream: true })
   });
-  const data = await response.json();
-  res.status(200).json(data);
+  return new Response(response.body, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Access-Control-Allow-Origin': '*'
+    }
+  });
 }
