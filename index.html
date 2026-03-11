@@ -946,8 +946,17 @@ async function envoyerMessage(contenu) {
 
 function afficherStream(texte) {
   const storyEl = document.getElementById('story-text');
-  const propre = nettoyer(texte);
-  storyEl.innerHTML = propre.split('\n\n').filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('') + '<span style="display:inline-block;width:2px;height:1em;background:var(--rouge);margin-left:2px;vertical-align:text-bottom;animation:clignote 0.7s step-end infinite;"></span>';
+  // Pendant le streaming : on affiche tout sauf ce qui suit [ CHOIX ] et les tags connus complets
+  // On ne coupe PAS sur un [ partiel pour éviter de tronquer des mots
+  const visible = texte
+    .replace(/\[\s*CHOIX\s*\][\s\S]*/i, '')
+    .replace(/\[EXTRAIT_TERMINE\]/g, '')
+    .replace(/\[SAVOIR:[A-Za-z]+\]/g, '')
+    .replace(/\[INDICE:[A-Za-z]+\]/g, '')
+    .replace(/\[ACTE:\d+\]/g, '')
+    .replace(/\[SCENE:\d+\]/g, '')
+    .trim();
+  storyEl.innerHTML = visible.split('\n\n').filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('') + '<span style="display:inline-block;width:2px;height:1em;background:var(--rouge);margin-left:2px;vertical-align:text-bottom;animation:clignote 0.7s step-end infinite;"></span>';
 }
 
 function nettoyer(texte) {
