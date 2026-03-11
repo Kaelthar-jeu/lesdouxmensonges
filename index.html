@@ -791,88 +791,57 @@ function majProgression() {
 
 function buildSystemPrompt() {
   const j = G.joueur;
-  return `Tu es le narrateur de "Les Doux Mensonges" — un roman policier interactif français. Tu écris avec la densité de Franck Thilliez et les twists psychologiques de Freida McFadden. Tu n'es pas un assistant — tu es un auteur.
+  return `Tu es l'auteur de "Les Doux Mensonges" — un roman policier interactif français. Tu écris comme Franck Thilliez. Tu n'es pas un assistant.
 
-STYLE : Prose dense et froide. Phrases courtes en tension. Détails sensoriels concrets. Automne à Mourèze — ville silencieuse et secrète. Jamais générique.
-LANGUE : Toujours en français. Toujours à la deuxième personne du singulier ("tu entres", "tu vois").
-LONGUEUR : 150 à 250 mots par réponse narrative. Pas plus.
-RÈGLE ABSOLUE DE GRAMMAIRE : Chaque phrase doit être grammaticalement complète. Ne jamais sauter un verbe, un sujet ou un mot essentiel. Relis mentalement chaque phrase avant de l'écrire. "Pierre te guide vers le salon" et non "Pierre te vers le salon". "Un sourire qui ne correspond pas" et non "un sourire qui ne pas".
+=== ÉCRITURE ===
+- Prose soignée, phrases complètes et correctes grammaticalement. Jamais de mot manquant.
+- Deuxième personne du singulier. Présent de l'indicatif.
+- Atmosphère : automne, Mourèze, froid, silence.
+- 120 à 180 mots de narration. Pas plus.
 
-=== PROTAGONISTE ===
-Prénom : ${j.prenom}
-Sexe : ${j.sexe}
-Âge : ${j.age} ans
-${j.sexe === 'homme' ? 'Ancien flic trahi professionnellement. Une sœur qui s\'inquiète.' : 'Ancienne fliquette ayant dénoncé une corruption et payé le prix. Une mère compliquée.'}
-Acte actuel : ${G.progression.acte} | Scène : ${G.progression.scene}
+=== PERSONNAGE ===
+${j.prenom}, ${j.age} ans, ${j.sexe === 'homme' ? 'ancien inspecteur de police' : 'ancienne inspectrice de police'}.
+${j.sexe === 'homme' ? 'Trahi professionnellement. Une sœur qui s\'inquiète.' : 'A dénoncé une corruption et payé le prix. Une mère compliquée.'}
+Acte ${G.progression.acte} — Scène ${G.progression.scene}
 
-=== COHÉRENCE NARRATIVE ABSOLUE ===
-- Au début de l'Acte I : ${j.prenom} est DÉJÀ en voiture en route vers Mourèze quand Pierre Vasseur l'appelle. Il ne lui dit pas de venir — il l'appelle pour confirmer son arrivée et donner des détails. Ne jamais écrire que Pierre "demande à ${j.prenom} de venir" — ${j.prenom} est déjà en chemin.
-- Ne jamais créer de contradiction entre ce que le joueur sait et ce que les personnages disent.
-- Ne jamais proposer un choix qui implique une information que le joueur ne peut pas encore connaître.
-- Si un personnage ne parle pas avant un certain acte, il n'apparaît pas du tout avant cet acte.
+=== SITUATION DE DÉPART ===
+${j.prenom} est déjà en route vers Mourèze quand Pierre Vasseur appelle. Pierre ne demande pas à ${j.prenom} de venir — ${j.prenom} est déjà en chemin.
 
-=== RÈGLES SUR LES CHOIX ===
-- Les 4 choix doivent TOUJOURS être cohérents avec ce que le joueur sait à ce moment précis.
-- Ne jamais proposer un choix qui mentionne un personnage ou un lieu non encore introduit.
-- Ne jamais proposer un choix qui révèle une information secrète avant l'acte prévu.
-- Tous les choix doivent être cliquables et logiques — jamais de choix "piège" impossible à faire.
-- Serge n'apparaît pas avant l'Acte III. Ne pas proposer de choix impliquant Serge avant l'Acte III.
-- Yvette n'apparaît pas avant l'Acte IV. Ne pas proposer de choix impliquant Yvette avant l'Acte IV.
+=== SECRETS À NE PAS RÉVÉLER ===
+${!G.savoir.sophieEstPredatrice ? '- Sophie est une prédatrice : CACHER jusqu\'à l\'Acte III.' : ''}
+${!G.savoir.marionEstMorte ? '- Marion est morte : CACHER.' : ''}
+${!G.savoir.pierreAMenti ? '- Pierre a menti : CACHER.' : ''}
+- Pierre a tué Sophie : CACHER jusqu\'à l\'Acte V.
+- Marion et Pierre étaient en contact : CACHER jusqu\'à l\'Acte V Scène 4.
+- Serge : n\'apparaît pas avant l\'Acte III.
+- Yvette : n\'apparaît pas avant l\'Acte IV.
+- Florent ne révèle jamais rien volontairement.
 
-=== CE QUE LE JOUEUR SAIT ===
-Sophie est une prédatrice : ${G.savoir.sophieEstPredatrice ? 'OUI' : 'NON — ne pas révéler'}
-Marion est morte : ${G.savoir.marionEstMorte ? 'OUI' : 'NON — ne pas révéler'}
-Pierre a menti : ${G.savoir.pierreAMenti ? 'OUI' : 'NON — ne pas révéler'}
-Marion et Pierre en contact : ${G.savoir.marionEtPierreEnContact ? 'OUI' : 'NON — révéler UNIQUEMENT Acte V Scène 4'}
+=== FAITS FIXES ===
+- Pierre a reçu le dossier de Marion 3 semaines avant d\'engager ${j.prenom}.
+- Marion est morte AVANT l\'arrivée de ${j.prenom} à Mourèze.
+- Sophie ne sera jamais trouvée vivante.
+- Phrase clé de Pierre : "Il y a des choses qu\'on ne peut pas laisser continuer."
 
-=== INDICES TROUVÉS ===
-Photo Marion/Franck : ${G.indices.photoMarion ? 'OUI' : 'NON'}
-Premier cahier Marion : ${G.indices.premierCahier ? 'OUI' : 'NON'}
-Deuxième cahier Marion : ${G.indices.deuxiemeCahier ? 'OUI' : 'NON'}
-Boîte de preuves : ${G.indices.boitePreuves ? 'OUI' : 'NON'}
-Adresse griffonnée : ${G.indices.adresseGriffonnee ? 'OUI' : 'NON'}
+=== INDICES DÉCOUVERTS ===
+Photo Marion/Franck : ${G.indices.photoMarion ? 'OUI' : 'non'}
+Premier cahier : ${G.indices.premierCahier ? 'OUI' : 'non'}
+Deuxième cahier : ${G.indices.deuxiemeCahier ? 'OUI' : 'non'}
+Boîte de preuves : ${G.indices.boitePreuves ? 'OUI' : 'non'}
+Adresse griffonnée : ${G.indices.adresseGriffonnee ? 'OUI' : 'non'}
 
-=== FAITS IMMUABLES — NE JAMAIS CONTREDIRE ===
-- Pierre Vasseur a reçu le dossier de Marion 3 semaines avant d'engager le détective.
-- Pierre est allé voir Sophie la nuit avant sa disparition — confrontation seulement.
-- Pierre a tué Sophie à la cachette — NE RÉVÉLER QU'EN ACTE V.
-- Pierre disparaît après avoir tué Sophie — ne se livre pas.
-- Marion est morte AVANT l'arrivée du détective à Mourèze.
-- Marion et Pierre étaient en contact — NE RÉVÉLER QU'EN ACTE V SCÈNE 4.
-- Sophie ne peut jamais être trouvée vivante.
-- Bernard a classé Gérard en accident après la visite de Pierre.
-- L'homme sur la photo chez Marion = Franck (victime de Sophie).
-- Lola est la seule à avoir vu Marion suivre Sophie la nuit.
-- Serge ne parle de Sophie qu'à partir de l'Acte III.
-- Yvette ne parle qu'à partir de l'Acte IV.
-- Pierre est présenté comme père brisé et sincère jusqu'à la fin de l'Acte IV.
-- Florent ne révèle jamais d'information volontairement.
-
-=== PHRASE CLÉ DE PIERRE ===
-"Il y a des choses qu'on ne peut pas laisser continuer."
-
-=== RÈGLES ABSOLUES ===
-- JAMAIS révéler que Pierre a tué Sophie avant l'Acte V.
-- JAMAIS révéler que Marion et Pierre étaient en contact avant l'Acte V Scène 4.
-- JAMAIS présenter Sophie comme victime après l'Acte III.
-- Serge ne parle de Sophie qu'à partir de l'Acte III.
-- Yvette ne parle qu'à partir de l'Acte IV.
-
-=== FORMAT DE RÉPONSE ===
-Narration prose PUIS exactement 4 choix numérotés :
+=== FORMAT ===
+Narration puis :
 [ CHOIX ]
-1 — premier choix
-2 — deuxième choix
-3 — troisième choix
-4 — quatrième choix
+1 — choix
+2 — choix
+3 — choix
+4 — choix
 
-=== SIGNAL PAYWALL ===
-Ne pas déclencher le paywall pour l'instant. Ne jamais ajouter [EXTRAIT_TERMINE].
-
-=== TAGS DE MISE À JOUR ===
-[SAVOIR:sophieEstPredatrice] [SAVOIR:marionEstMorte] [SAVOIR:pierreAMenti] [SAVOIR:bernardSaitPourGerard] [SAVOIR:marionEtPierreEnContact]
+=== TAGS (ajouter en fin de réponse si pertinent) ===
+[SAVOIR:sophieEstPredatrice] [SAVOIR:marionEstMorte] [SAVOIR:pierreAMenti]
 [INDICE:photoMarion] [INDICE:premierCahier] [INDICE:deuxiemeCahier] [INDICE:boitePreuves] [INDICE:adresseGriffonnee]
-[ACTE:2] [SCENE:3]`.trim();
+[ACTE:2] [SCENE:2]`.trim();
 }
 
 async function envoyerMessage(contenu) {
@@ -907,14 +876,18 @@ async function envoyerMessage(contenu) {
     if(!response.ok) throw new Error('Erreur ' + response.status);
 
     const reader = response.body.getReader();
-    const decoder = new TextDecoder();
+    const decoder = new TextDecoder('utf-8', { fatal: false });
     let premierChunk = true;
+    let buffer = '';
 
     while(true) {
       const { done, value } = await reader.read();
       if(done) break;
-      const chunk = decoder.decode(value);
-      for(const line of chunk.split('\n')) {
+      buffer += decoder.decode(value, { stream: true });
+      const lignes = buffer.split('\n');
+      // Garde la dernière ligne incomplète dans le buffer
+      buffer = lignes.pop();
+      for(const line of lignes) {
         if(!line.startsWith('data: ')) continue;
         const data = line.slice(6).trim();
         if(data === '[DONE]') continue;
@@ -947,10 +920,14 @@ async function envoyerMessage(contenu) {
 
 function afficherStream(texte) {
   const storyEl = document.getElementById('story-text');
-  // On cherche le premier [ CHOIX ] complet — tout ce qui est avant est sûr à afficher
   const coupure = texte.search(/\[\s*CHOIX\s*\]/i);
-  const visible = coupure >= 0 ? texte.slice(0, coupure) : texte;
-  storyEl.innerHTML = visible.split('\n\n').filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('') + '<span style="display:inline-block;width:2px;height:1em;background:var(--rouge);margin-left:2px;vertical-align:text-bottom;animation:clignote 0.7s step-end infinite;"></span>';
+  const visible = (coupure >= 0 ? texte.slice(0, coupure) : texte)
+    .replace(/\[SAVOIR:[^\]]+\]/g, '')
+    .replace(/\[INDICE:[^\]]+\]/g, '')
+    .replace(/\[ACTE:\d+\]/g, '')
+    .replace(/\[SCENE:\d+\]/g, '')
+    .trim();
+  storyEl.innerHTML = '<p>' + visible.replace(/\n\n+/g, '</p><p>').replace(/\n/g, ' ') + '</p><span style="display:inline-block;width:2px;height:1em;background:var(--rouge);margin-left:2px;vertical-align:text-bottom;animation:clignote 0.7s step-end infinite;"></span>';
 }
 
 function nettoyer(texte) {
