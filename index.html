@@ -946,16 +946,9 @@ async function envoyerMessage(contenu) {
 
 function afficherStream(texte) {
   const storyEl = document.getElementById('story-text');
-  // Pendant le streaming : on affiche tout sauf ce qui suit [ CHOIX ] et les tags connus complets
-  // On ne coupe PAS sur un [ partiel pour éviter de tronquer des mots
-  const visible = texte
-    .replace(/\[\s*CHOIX\s*\][\s\S]*/i, '')
-    .replace(/\[EXTRAIT_TERMINE\]/g, '')
-    .replace(/\[SAVOIR:[A-Za-z]+\]/g, '')
-    .replace(/\[INDICE:[A-Za-z]+\]/g, '')
-    .replace(/\[ACTE:\d+\]/g, '')
-    .replace(/\[SCENE:\d+\]/g, '')
-    .trim();
+  // On cherche le premier [ CHOIX ] complet — tout ce qui est avant est sûr à afficher
+  const coupure = texte.search(/\[\s*CHOIX\s*\]/i);
+  const visible = coupure >= 0 ? texte.slice(0, coupure) : texte;
   storyEl.innerHTML = visible.split('\n\n').filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('') + '<span style="display:inline-block;width:2px;height:1em;background:var(--rouge);margin-left:2px;vertical-align:text-bottom;animation:clignote 0.7s step-end infinite;"></span>';
 }
 
