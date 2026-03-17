@@ -528,6 +528,15 @@
     <button class="btn-secondaire" id="btn-reprendre" onclick="reprendrePartie()" style="display:none;">Reprendre mon enquête</button>
 
     <div class="intro-footer">SILENCE · TRAHISON · VÉRITÉ</div>
+
+    <div id="api-key-zone" style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <input type="password" id="api-key-input"
+        placeholder="Clé API Anthropic (sk-ant-...)"
+        style="width:280px;padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:#c8b89a;font-family:monospace;font-size:12px;outline:none;border-radius:2px;"
+        oninput="sauvegarderCleApi(this.value)"
+      />
+      <div id="api-key-status" style="font-size:11px;color:#888;font-family:monospace;height:14px;"></div>
+    </div>
   </div>
 </div>
 
@@ -610,6 +619,27 @@
 <script>
 // ========== ÉTAT DU JEU ==========
 const SAVE_KEY = 'ldm_save_v1';
+// Gestion clé API
+function sauvegarderCleApi(val) {
+  val = val.trim();
+  G.apiKey = val;
+  localStorage.setItem('ldm_api_key', val);
+  const st = document.getElementById('api-key-status');
+  if(st) st.textContent = val.startsWith('sk-ant-') ? '✓ Clé valide' : val.length > 0 ? '⚠ Format inattendu' : '';
+}
+
+function chargerCleApi() {
+  const saved = localStorage.getItem('ldm_api_key') || '';
+  G.apiKey = saved;
+  const input = document.getElementById('api-key-input');
+  if(input) {
+    input.value = saved;
+    // Masquer le champ si clé déjà sauvegardée et valide
+    const zone = document.getElementById('api-key-zone');
+    if(zone) zone.style.display = saved.startsWith('sk-ant-') ? 'none' : 'flex';
+  }
+}
+
 let G = {
   apiKey: '',
   joueur: { prenom: 'Alexandre', sexe: 'homme', age: 34 },
@@ -658,6 +688,7 @@ function charger() {
 
 // ========== INIT ==========
 window.onload = function() {
+  chargerCleApi();
   const save = charger();
   if(save && save.joueur && save.joueur.prenom) {
     document.getElementById('btn-reprendre').style.display = 'block';
@@ -822,7 +853,8 @@ async function envoyerMessage(contenu) {
         'Content-Type': 'application/json',
         'x-api-key': G.apiKey,
         'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'messages-2023-12-15'
+        'anthropic-beta': 'messages-2023-12-15',
+        'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
