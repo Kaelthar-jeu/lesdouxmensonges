@@ -358,6 +358,17 @@
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+    .choix-label {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--texte-doux);
+      text-align: center;
+      width: 100%;
+      margin-bottom: 4px;
+      letter-spacing: 0.03em;
+    }
+
     .choix-btn {
       background: #fff;
       border: 1px solid var(--border);
@@ -915,18 +926,26 @@ async function envoyerMessage(contenu) {
   G.streaming = false;
 }
 
+function nettoyerTexte(texte) {
+  // Coupe TOUT ce qui suit le bloc [CHOIX] — quelle que soit la forme
+  // Gère : [CHOIX], [ CHOIX ], [choix], variantes avec tirets ou espaces
+  let t = texte.replace(/\[\s*CHOIX\s*\][\s\S]*/i, '');
+  // Supprime aussi les lignes commençant par un chiffre suivi de — ou - (choix bruts qui auraient passé)
+  t = t.replace(/^[1-4][\s\t]*[\u2014\u2013\-].*$/gm, '');
+  // Supprime les autres tags techniques
+  t = t.replace(/\[EXTRAIT_TERMINE\]/gi, '')
+       .replace(/\[SAVOIR:[^\]]*\]/gi, '')
+       .replace(/\[INDICE:[^\]]*\]/gi, '')
+       .replace(/\[ACTE:\d+\]/gi, '')
+       .replace(/\[SCENE:\d+\]/gi, '');
+  // Supprime les lignes vides multiples
+  t = t.replace(/\n{3,}/g, '\n\n');
+  return t.trim();
+}
+
 function afficherTexteStream(texte) {
   const storyEl = document.getElementById('story-text');
-  // Nettoie les tags, les choix numérotés et tout ce qui suit [CHOIX]
-  const propre = texte
-    .replace(/\[\s*CHOIX\s*\][\s\S]*$/i, '')
-    .replace(/\[EXTRAIT_TERMINE\]/g, '')
-    .replace(/\[SAVOIR:[^\]]+\]/g, '')
-    .replace(/\[INDICE:[^\]]+\]/g, '')
-    .replace(/\[ACTE:\d+\]/g, '')
-    .replace(/\[SCENE:\d+\]/g, '')
-    .replace(/^\d[\s\u2014\-].+$/gm, '')
-    .trim();
+  const propre = nettoyerTexte(texte);
   storyEl.innerHTML = propre.split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('') + '<span class="curseur"></span>';
 }
 
@@ -955,29 +974,13 @@ function traiterReponse(texte) {
     G.progression.extraitTermine = true;
     sauvegarder();
     // Affiche le texte final puis redirige
-    const propre = texte
-      .replace(/\[CHOIX\][\s\S]*$/i, '')
-      .replace(/\[EXTRAIT_TERMINE\]/g, '')
-      .replace(/\[SAVOIR:[^\]]+\]/g, '')
-      .replace(/\[INDICE:[^\]]+\]/g, '')
-      .replace(/\[ACTE:\d+\]/g, '')
-      .replace(/\[SCENE:\d+\]/g, '')
-      .trim();
-    storyEl.innerHTML = propre.split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+    storyEl.innerHTML = nettoyerTexte(texte).split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
     setTimeout(() => afficherEcran('screen-paywall'), 2000);
     return;
   }
 
   // Affiche le texte propre
-  const propre = texte
-    .replace(/\[CHOIX\][\s\S]*$/i, '')
-    .replace(/\[EXTRAIT_TERMINE\]/g, '')
-    .replace(/\[SAVOIR:[^\]]+\]/g, '')
-    .replace(/\[INDICE:[^\]]+\]/g, '')
-    .replace(/\[ACTE:\d+\]/g, '')
-    .replace(/\[SCENE:\d+\]/g, '')
-    .trim();
-  storyEl.innerHTML = propre.split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+  storyEl.innerHTML = nettoyerTexte(texte).split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
 
   // Extrait les choix
   const choixMatch = texte.match(/\[\s*CHOIX\s*\]([\s\S]*?)(?=\[EXTRAIT|\[SAVOIR|\[INDICE|\[ACTE|\[SCENE|$)/i);
@@ -985,10 +988,10 @@ function traiterReponse(texte) {
     const lignes = choixMatch[1].split('\n').filter(l => /^\d[\s—\-]/.test(l.trim()));
     if(lignes.length) {
       const container = document.getElementById('choix-container');
-      container.innerHTML = lignes.map(l => {
+      container.innerHTML = '<p class="choix-label">Que faites-vous ?</p>' + lignes.map(l => {
         const num = l.match(/^(\d)/)[1];
-        const txt = l.replace(/^\d[\s—\-]+/, '').trim();
-        return `<button class="choix-btn" onclick="choisir('${txt.replace(/'/g, "\\'")}')"><span class="choix-num">${num}.</span>${txt}</button>`;
+        const txt = l.replace(/^\d[\s\u2014\u2013\-]+/, '').trim();
+        return `<button class="choix-btn" onclick="choisir('${txt.replace(/'/g, "\\'")}')">${txt}</button>`;
       }).join('');
       container.style.display = 'flex';
       // Scroll doux vers les choix sans remonter en haut
