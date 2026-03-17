@@ -864,6 +864,8 @@ async function envoyerMessage(contenu) {
 
   const storyEl = document.getElementById('story-text');
   storyEl.innerHTML = '<span class="curseur"></span>';
+  // Scroll vers le haut du texte dès le début de la génération
+  setTimeout(() => storyEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 
   G.historique.push({ role: 'user', content: contenu });
   if(G.historique.length > 30) G.historique = G.historique.slice(-30);
@@ -994,13 +996,7 @@ function traiterReponse(texte) {
         return `<button class="choix-btn" onclick="choisir('${txt.replace(/'/g, "\\'")}')">${txt}</button>`;
       }).join('');
       container.style.display = 'flex';
-      // Scroll doux vers les choix sans remonter en haut
-      setTimeout(() => {
-        const rect = container.getBoundingClientRect();
-        if(rect.top > window.innerHeight * 0.85) {
-          container.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }
-      }, 150);
+      // Pas de scroll forcé à la fin — le lecteur reste où il est
     }
   }
 }
