@@ -317,6 +317,62 @@
     .dot.actif { background: var(--rouge); }
     .dot.fait { background: var(--or); }
 
+    /* Bouton panneau */
+    .panel-toggle-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 12px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .panel-toggle-btn:hover { border-color: var(--rouge); color: var(--rouge); }
+
+    /* Panneau déroulant */
+    #ldm-panel {
+      display: none;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    #ldm-panel.open { display: block; }
+    .panel-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .panel-section-title {
+      font-family: var(--font-titre);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--or);
+      margin-bottom: 8px;
+    }
+    .panel-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .panel-row:last-child { border-bottom: none; }
+    .panel-key { color: var(--texte-doux); font-family: var(--font-corps); }
+    .panel-val { color: var(--encre); font-weight: bold; font-family: var(--font-corps); }
+    .panel-val.oui { color: var(--rouge); }
+    .panel-val.non { color: var(--border); }
+    .panel-counter {
+      font-size: 11px;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      margin-top: 8px;
+      font-style: italic;
+    }
+    @media (max-width: 500px) { .panel-inner { grid-template-columns: 1fr; } }
+
     .game-body {
       flex: 1;
       padding: 32px 0 24px;
@@ -587,12 +643,64 @@
       <div class="game-acte-label" id="acte-label">Acte I — L'Arrivée</div>
       <div class="game-header-titre">Les Doux Mensonges</div>
     </div>
-    <div class="progression-dots" id="progression-dots">
-      <div class="dot actif"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="progression-dots" id="progression-dots">
+        <div class="dot actif"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <button class="panel-toggle-btn" onclick="toggleLdmPanel()">Enquête ▾</button>
+    </div>
+  </div>
+
+  <!-- Panneau déroulant -->
+  <div id="ldm-panel">
+    <div class="panel-inner">
+      <div>
+        <div class="panel-section-title">Ce que vous savez</div>
+        <div class="panel-row">
+          <span class="panel-key">Sophie</span>
+          <span class="panel-val" id="p-sophie">Mystère</span>
+        </div>
+        <div class="panel-row">
+          <span class="panel-key">Marion</span>
+          <span class="panel-val" id="p-marion">Mystère</span>
+        </div>
+        <div class="panel-row">
+          <span class="panel-key">Pierre</span>
+          <span class="panel-val" id="p-pierre">Père brisé</span>
+        </div>
+        <div class="panel-row">
+          <span class="panel-key">Bernard</span>
+          <span class="panel-val" id="p-bernard">Inconnu</span>
+        </div>
+      </div>
+      <div>
+        <div class="panel-section-title">Indices collectés</div>
+        <div class="panel-row">
+          <span class="panel-key">Photo Marion</span>
+          <span class="panel-val non" id="p-photo">Non</span>
+        </div>
+        <div class="panel-row">
+          <span class="panel-key">Premier cahier</span>
+          <span class="panel-val non" id="p-cahier1">Non</span>
+        </div>
+        <div class="panel-row">
+          <span class="panel-key">Deuxième cahier</span>
+          <span class="panel-val non" id="p-cahier2">Non</span>
+        </div>
+        <div class="panel-row">
+          <span class="panel-key">Boîte de preuves</span>
+          <span class="panel-val non" id="p-boite">Non</span>
+        </div>
+        <div class="panel-row">
+          <span class="panel-key">Adresse griffonnée</span>
+          <span class="panel-val non" id="p-adresse">Non</span>
+        </div>
+        <div class="panel-counter" id="p-counter">Choix : 0 / 20</div>
+      </div>
     </div>
   </div>
 
@@ -753,6 +861,38 @@ function lancerJeu() {
 }
 
 // ========== PROGRESSION ==========
+function toggleLdmPanel() {
+  const panel = document.getElementById('ldm-panel');
+  const btn = document.querySelector('.panel-toggle-btn');
+  panel.classList.toggle('open');
+  btn.textContent = panel.classList.contains('open') ? 'Enquête ▴' : 'Enquête ▾';
+}
+
+function majPanel() {
+  const s = G.savoir;
+  const i = G.indices;
+  const set = (id, val, cls) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.textContent = val;
+    el.className = 'panel-val ' + (cls || '');
+  };
+  set('p-sophie', s.sophieEstPredatrice ? 'Prédatrice' : 'Mystère', s.sophieEstPredatrice ? 'oui' : '');
+  set('p-marion', s.marionEstMorte ? 'Décédée' : 'Disparue', s.marionEstMorte ? 'oui' : '');
+  set('p-pierre', s.pierreAMenti ? 'Suspect' : 'Père brisé', s.pierreAMenti ? 'oui' : '');
+  set('p-bernard', s.bernardSaitPourGerard ? 'Complice' : 'Inconnu', s.bernardSaitPourGerard ? 'oui' : '');
+  set('p-photo', i.photoMarion ? 'Oui' : 'Non', i.photoMarion ? 'oui' : 'non');
+  set('p-cahier1', i.premierCahier ? 'Oui' : 'Non', i.premierCahier ? 'oui' : 'non');
+  set('p-cahier2', i.deuxiemeCahier ? 'Oui' : 'Non', i.deuxiemeCahier ? 'oui' : 'non');
+  set('p-boite', i.boitePreuves ? 'Oui' : 'Non', i.boitePreuves ? 'oui' : 'non');
+  set('p-adresse', i.adresseGriffonnee ? 'Oui' : 'Non', i.adresseGriffonnee ? 'oui' : 'non');
+  const ctr = document.getElementById('p-counter');
+  if(ctr) {
+    const nb = G.progression.nbChoix || 0;
+    ctr.textContent = G.progression.adminMode ? 'Mode admin — choix illimités' : `Choix : ${nb} / 20`;
+  }
+}
+
 function majProgression() {
   const actes = ['Acte I — L\'Arrivée', 'Acte II — Les Premières Fissures', 'Acte III — La Vérité qui Remonte', 'Acte IV — L\'Effondrement', 'Acte V — Les Doux Mensonges'];
   document.getElementById('acte-label').textContent = actes[G.progression.acte - 1] || actes[0];
@@ -967,6 +1107,7 @@ function traiterReponse(texte) {
   // Mise à jour acte/scène
   const acteMatch = texte.match(/\[ACTE:(\d+)\]/);
   if(acteMatch) { G.progression.acte = parseInt(acteMatch[1]); majProgression(); }
+  majPanel();
   const sceneMatch = texte.match(/\[SCENE:(\d+)\]/);
   if(sceneMatch) G.progression.scene = parseInt(sceneMatch[1]);
 
