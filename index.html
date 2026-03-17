@@ -323,7 +323,7 @@
     }
 
     .story-text {
-      font-size: clamp(16px, 2.5vw, 18px);
+      font-size: 23px;
       line-height: 1.85;
       color: var(--texte);
       font-weight: 300;
@@ -759,11 +759,24 @@ function buildSystemPrompt() {
   const pronom = j.sexe === 'femme' ? 'elle' : 'il';
   const detective = j.sexe === 'femme' ? 'détective' : 'détective';
 
-  return `Tu es le narrateur de "Les Doux Mensonges" — un roman policier interactif français. Tu écris avec la densité de Franck Thilliez et les twists de Freida McFadden. Tu n'es pas un assistant — tu es un auteur.
+  return `Tu es le narrateur de "Les Doux Mensonges" — un roman policier interactif français. Tu n'es pas un assistant. Tu es un auteur de roman noir.
 
-STYLE : Prose dense, phrases courtes en tension, détails sensoriels concrets. Atmosphère froide et silencieuse. Automne à Mourèze. Jamais générique.
-LANGUE : Toujours en français. Toujours à la deuxième personne du singulier.
-LONGUEUR : 150 à 300 mots par réponse.
+=== MOTEUR LITTÉRAIRE ===
+Tu écris dans l'esprit de trois auteurs :
+- Arnaldur Indridason : enquête lente, silences lourds, province qui se tait, personnages brisés en profondeur
+- Harlan Coben : fausses pistes impeccables, chaque personnage semble cacher quelque chose d'ordinaire — et c'est ça qui trompe
+- Franck Thilliez : noirceur psychologique réelle, violence froide, révélations qui recontextualisent tout ce qu'on croyait savoir
+
+STYLE : Prose sobre et dense. Phrases courtes en tension. Détails sensoriels concrets — le froid, l'humidité, l'odeur du café froid. Mourèze est une ville de province française en automne, silencieuse et méfiante. Jamais générique. Jamais théâtral.
+LANGUE : Toujours en français. Toujours à la deuxième personne du singulier. Vouvoiement des habitants avec le détective.
+LONGUEUR : 180 à 280 mots par réponse.
+
+=== RÈGLES DE COHÉRENCE ABSOLUE ===
+RÈGLE 1 — CONSTRUCTION PROGRESSIVE : L'histoire avance comme un roman. Chaque scène pose des éléments qui seront utiles plus tard. Rien n'arrive sans raison narrative.
+RÈGLE 2 — MÉMOIRE TOTALE : Tu te souviens de TOUT ce qui s'est passé dans cette session. Aucun personnage ne se contredit. Aucun lieu ne change. Aucun fait établi ne disparaît.
+RÈGLE 3 — TWISTS DOSÉS : Les twists arrivent aux actes prévus UNIQUEMENT. Avant l'Acte III, AUCUN soupçon sur Sophie, AUCUN soupçon sur Pierre. Le joueur doit avoir l'impression d'une enquête classique jusqu'à ce que la réalité remonte.
+RÈGLE 4 — PERSONNAGES CONSISTANTS : Chaque personnage a une psychologie fixe. Pierre est un père brisé et sincère. Rémi est fermé et amer. Bernard est accommodant jusqu'à une limite. Ils ne changent pas d'attitude sans raison narrative explicite.
+RÈGLE 5 — CHOIX ANCRÉS : Les 4 choix proposés au joueur doivent être directement liés à la situation narrative en cours — jamais génériques, jamais abstraits. Si le joueur est devant Rémi au café, les choix concernent Rémi et ce moment précis.
 
 === PROTAGONISTE ===
 Prénom : ${j.prenom}
@@ -904,14 +917,15 @@ async function envoyerMessage(contenu) {
 
 function afficherTexteStream(texte) {
   const storyEl = document.getElementById('story-text');
-  // Nettoie les tags et affiche
+  // Nettoie les tags, les choix numérotés et tout ce qui suit [CHOIX]
   const propre = texte
-    .replace(/\[CHOIX\][\s\S]*$/i, '')
+    .replace(/\[\s*CHOIX\s*\][\s\S]*$/i, '')
     .replace(/\[EXTRAIT_TERMINE\]/g, '')
     .replace(/\[SAVOIR:[^\]]+\]/g, '')
     .replace(/\[INDICE:[^\]]+\]/g, '')
     .replace(/\[ACTE:\d+\]/g, '')
     .replace(/\[SCENE:\d+\]/g, '')
+    .replace(/^\d[\s\u2014\-].+$/gm, '')
     .trim();
   storyEl.innerHTML = propre.split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('') + '<span class="curseur"></span>';
 }
@@ -977,8 +991,13 @@ function traiterReponse(texte) {
         return `<button class="choix-btn" onclick="choisir('${txt.replace(/'/g, "\\'")}')"><span class="choix-num">${num}.</span>${txt}</button>`;
       }).join('');
       container.style.display = 'flex';
-      // Scroll vers les choix
-      setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+      // Scroll doux vers les choix sans remonter en haut
+      setTimeout(() => {
+        const rect = container.getBoundingClientRect();
+        if(rect.top > window.innerHeight * 0.85) {
+          container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+      }, 150);
     }
   }
 }
