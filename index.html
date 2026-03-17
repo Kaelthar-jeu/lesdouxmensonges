@@ -704,7 +704,7 @@ function reprendrePartie() {
   if(save) {
     G = save;
     G.streaming = false;
-    if(G.progression.extraitTermine && !G.progression.abonne) {
+    if(G.progression.extraitTermine && !G.progression.abonne && !G.progression.adminMode) {
       afficherEcran('screen-paywall');
     } else {
       afficherEcran('screen-game');
@@ -937,7 +937,7 @@ function traiterReponse(texte) {
   if(sceneMatch) G.progression.scene = parseInt(sceneMatch[1]);
 
   // Paywall
-  if(texte.includes('[EXTRAIT_TERMINE]') && !G.progression.abonne) {
+  if(texte.includes('[EXTRAIT_TERMINE]') && !G.progression.abonne && !G.progression.adminMode) {
     G.progression.extraitTermine = true;
     sauvegarder();
     // Affiche le texte final puis redirige
@@ -1024,8 +1024,9 @@ async function validerCode() {
       body: JSON.stringify({ code })
     });
     const data = await res.json();
-    if(data.valide) {
+    if(data.valid || data.valide) {
       G.progression.abonne = true;
+      if(data.admin) G.progression.adminMode = true;
       G.progression.codeAbonnement = code;
       G.progression.abonneJusquau = data.expire_le;
       sauvegarder();
