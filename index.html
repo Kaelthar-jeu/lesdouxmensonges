@@ -864,8 +864,7 @@ async function envoyerMessage(contenu) {
 
   const storyEl = document.getElementById('story-text');
   storyEl.innerHTML = '<span class="curseur"></span>';
-  // Scroll vers le haut du texte dès le début de la génération
-  setTimeout(() => storyEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+
 
   G.historique.push({ role: 'user', content: contenu });
   if(G.historique.length > 30) G.historique = G.historique.slice(-30);
