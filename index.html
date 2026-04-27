@@ -31,11 +31,10 @@
       overflow-x: hidden;
     }
 
-    /* ========== ÉCRANS ========== */
     .screen { display: none; min-height: 100vh; }
     .screen.active { display: flex; flex-direction: column; }
 
-    /* ========== ÉCRAN INTRO ========== */
+    /* INTRO */
     #screen-intro {
       align-items: center;
       justify-content: center;
@@ -120,8 +119,6 @@
       font-weight: 300;
     }
 
-    /* Champ clé API */
-
     .btn-principal {
       background: var(--rouge);
       color: #fff;
@@ -162,17 +159,14 @@
       opacity: 0.6;
     }
 
-    /* ========== ÉCRAN SETUP ========== */
+    /* SETUP */
     #screen-setup {
       align-items: center;
       justify-content: center;
       padding: 40px 24px;
     }
 
-    .setup-inner {
-      max-width: 480px;
-      width: 100%;
-    }
+    .setup-inner { max-width: 480px; width: 100%; }
 
     .setup-titre {
       font-family: var(--font-titre);
@@ -248,7 +242,6 @@
 
     .setup-input:focus { border-color: var(--rouge); }
 
-    /* Slider âge */
     .age-display {
       font-family: var(--font-titre);
       font-size: 24px;
@@ -264,7 +257,7 @@
       accent-color: var(--rouge);
     }
 
-    /* ========== ÉCRAN JEU ========== */
+    /* JEU */
     #screen-game {
       flex-direction: column;
       min-height: 100vh;
@@ -317,7 +310,6 @@
     .dot.actif { background: var(--rouge); }
     .dot.fait { background: var(--or); }
 
-    /* Bouton panneau */
     .panel-toggle-btn {
       background: none;
       border: 1px solid var(--border);
@@ -330,7 +322,6 @@
     }
     .panel-toggle-btn:hover { border-color: var(--rouge); color: var(--rouge); }
 
-    /* Panneau déroulant */
     #ldm-panel {
       display: none;
       background: var(--bg2);
@@ -338,11 +329,13 @@
       padding: 16px 0;
     }
     #ldm-panel.open { display: block; }
+
     .panel-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
+
     .panel-section-title {
       font-family: var(--font-titre);
       font-size: 11px;
@@ -351,6 +344,7 @@
       color: var(--or);
       margin-bottom: 8px;
     }
+
     .panel-row {
       display: flex;
       justify-content: space-between;
@@ -359,11 +353,13 @@
       border-bottom: 1px solid var(--border);
       font-size: 13px;
     }
+
     .panel-row:last-child { border-bottom: none; }
     .panel-key { color: var(--texte-doux); font-family: var(--font-corps); }
     .panel-val { color: var(--encre); font-weight: bold; font-family: var(--font-corps); }
     .panel-val.oui { color: var(--rouge); }
     .panel-val.non { color: var(--border); }
+
     .panel-counter {
       font-size: 11px;
       color: var(--texte-doux);
@@ -371,6 +367,7 @@
       margin-top: 8px;
       font-style: italic;
     }
+
     @media (max-width: 500px) { .panel-inner { grid-template-columns: 1fr; } }
 
     .game-body {
@@ -400,9 +397,7 @@
       animation: clignote 0.7s step-end infinite;
     }
 
-    @keyframes clignote {
-      50% { opacity: 0; }
-    }
+    @keyframes clignote { 50% { opacity: 0; } }
 
     .choix-container {
       display: flex;
@@ -445,14 +440,7 @@
       color: var(--rouge);
     }
 
-    .choix-num {
-      color: var(--rouge);
-      font-family: var(--font-titre);
-      font-style: italic;
-      margin-right: 10px;
-    }
-
-    /* ========== ÉCRAN PAYWALL ========== */
+    /* PAYWALL */
     #screen-paywall {
       align-items: center;
       justify-content: center;
@@ -460,10 +448,7 @@
       text-align: center;
     }
 
-    .paywall-inner {
-      max-width: 460px;
-      width: 100%;
-    }
+    .paywall-inner { max-width: 460px; width: 100%; }
 
     .paywall-badge {
       display: inline-block;
@@ -528,7 +513,6 @@
     }
 
     .paywall-avantage:last-child { border-bottom: none; }
-
     .paywall-check { color: var(--rouge); font-size: 16px; }
 
     .paywall-deja {
@@ -539,9 +523,6 @@
       text-decoration: underline;
     }
 
-    /* ========== ERREUR ========== */
-
-    /* ========== LIEN RECIT GAMES ========== */
     .recitgames-link {
       background: var(--bg2);
       border-bottom: 1px solid var(--border);
@@ -560,7 +541,6 @@
 
     .recitgames-link a:hover { color: var(--rouge); }
 
-    /* ========== RESPONSIVE ========== */
     @media (max-width: 480px) {
       .choix-perso { grid-template-columns: 1fr; }
       .game-header { padding: 12px 0; }
@@ -569,12 +549,11 @@
 </head>
 <body>
 
-<!-- Lien retour Récit Games -->
 <div class="recitgames-link">
   <a href="https://recitgames.vercel.app">◀ RÉCIT GAMES</a>
 </div>
 
-<!-- ========== ÉCRAN INTRO ========== -->
+<!-- INTRO -->
 <div id="screen-intro" class="screen active">
   <div class="intro-inner">
     <div class="intro-ornement">Récit Games · Roman Interactif</div>
@@ -589,25 +568,13 @@
       « Quand tu lis un thriller classique, tu n'as pas le choix.<br>
       Ici, c'est toi qui décides. »
     </div>
-
-
     <button class="btn-principal" onclick="demarrerNouvellePartie()">Commencer l'enquête</button>
     <button class="btn-secondaire" id="btn-reprendre" onclick="reprendrePartie()" style="display:none;">Reprendre mon enquête</button>
-
     <div class="intro-footer">SILENCE · TRAHISON · VÉRITÉ</div>
-
-    <div id="api-key-zone" style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:8px;">
-      <input type="password" id="api-key-input"
-        placeholder="Clé API Anthropic (sk-ant-...)"
-        style="width:280px;padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:#c8b89a;font-family:monospace;font-size:12px;outline:none;border-radius:2px;"
-        oninput="sauvegarderCleApi(this.value)"
-      />
-      <div id="api-key-status" style="font-size:11px;color:#888;font-family:monospace;height:14px;"></div>
-    </div>
   </div>
 </div>
 
-<!-- ========== ÉCRAN SETUP ========== -->
+<!-- SETUP -->
 <div id="screen-setup" class="screen">
   <div class="setup-inner">
     <div class="setup-titre">Qui êtes-vous ?</div>
@@ -636,7 +603,7 @@
   </div>
 </div>
 
-<!-- ========== ÉCRAN JEU ========== -->
+<!-- JEU -->
 <div id="screen-game" class="screen">
   <div class="game-header">
     <div>
@@ -655,50 +622,22 @@
     </div>
   </div>
 
-  <!-- Panneau déroulant -->
   <div id="ldm-panel">
     <div class="panel-inner">
       <div>
         <div class="panel-section-title">Ce que vous savez</div>
-        <div class="panel-row">
-          <span class="panel-key">Sophie</span>
-          <span class="panel-val" id="p-sophie">Mystère</span>
-        </div>
-        <div class="panel-row">
-          <span class="panel-key">Marion</span>
-          <span class="panel-val" id="p-marion">Mystère</span>
-        </div>
-        <div class="panel-row">
-          <span class="panel-key">Pierre</span>
-          <span class="panel-val" id="p-pierre">Père brisé</span>
-        </div>
-        <div class="panel-row">
-          <span class="panel-key">Bernard</span>
-          <span class="panel-val" id="p-bernard">Inconnu</span>
-        </div>
+        <div class="panel-row"><span class="panel-key">Sophie</span><span class="panel-val" id="p-sophie">Mystère</span></div>
+        <div class="panel-row"><span class="panel-key">Marion</span><span class="panel-val" id="p-marion">Mystère</span></div>
+        <div class="panel-row"><span class="panel-key">Pierre</span><span class="panel-val" id="p-pierre">Père brisé</span></div>
+        <div class="panel-row"><span class="panel-key">Bernard</span><span class="panel-val" id="p-bernard">Inconnu</span></div>
       </div>
       <div>
         <div class="panel-section-title">Indices collectés</div>
-        <div class="panel-row">
-          <span class="panel-key">Photo Marion</span>
-          <span class="panel-val non" id="p-photo">Non</span>
-        </div>
-        <div class="panel-row">
-          <span class="panel-key">Premier cahier</span>
-          <span class="panel-val non" id="p-cahier1">Non</span>
-        </div>
-        <div class="panel-row">
-          <span class="panel-key">Deuxième cahier</span>
-          <span class="panel-val non" id="p-cahier2">Non</span>
-        </div>
-        <div class="panel-row">
-          <span class="panel-key">Boîte de preuves</span>
-          <span class="panel-val non" id="p-boite">Non</span>
-        </div>
-        <div class="panel-row">
-          <span class="panel-key">Adresse griffonnée</span>
-          <span class="panel-val non" id="p-adresse">Non</span>
-        </div>
+        <div class="panel-row"><span class="panel-key">Photo Marion</span><span class="panel-val non" id="p-photo">Non</span></div>
+        <div class="panel-row"><span class="panel-key">Premier cahier</span><span class="panel-val non" id="p-cahier1">Non</span></div>
+        <div class="panel-row"><span class="panel-key">Deuxième cahier</span><span class="panel-val non" id="p-cahier2">Non</span></div>
+        <div class="panel-row"><span class="panel-key">Boîte de preuves</span><span class="panel-val non" id="p-boite">Non</span></div>
+        <div class="panel-row"><span class="panel-key">Adresse griffonnée</span><span class="panel-val non" id="p-adresse">Non</span></div>
         <div class="panel-counter" id="p-counter">Choix : 0 / 20</div>
       </div>
     </div>
@@ -710,7 +649,7 @@
   </div>
 </div>
 
-<!-- ========== ÉCRAN PAYWALL ========== -->
+<!-- PAYWALL -->
 <div id="screen-paywall" class="screen">
   <div class="paywall-inner">
     <div class="paywall-badge">Fin de l'extrait gratuit</div>
@@ -720,15 +659,13 @@
     </div>
     <div class="paywall-prix">7€</div>
     <div class="paywall-prix-label">par mois · accès à tous les titres Récit Games</div>
-
     <div class="paywall-avantages">
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Les 5 actes complets des Doux Mensonges</div>
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Accès à Kaelthar et tous les futurs jeux</div>
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Narration unique générée pour vous</div>
       <div class="paywall-avantage"><span class="paywall-check">✦</span> Résiliation à tout moment</div>
     </div>
-
-    <button class="btn-principal" onclick="window.location.href='https://buy.stripe.com/test_8x2bJ05fU1yV3uKde1bZe00'">
+    <button class="btn-principal" onclick="window.location.href='https://buy.stripe.com/dRmdR90q9fKv8ku2jq04801'">
       Continuer l'enquête — 7€/mois
     </button>
     <div class="paywall-deja" onclick="afficherSaisieCode()">J'ai déjà un abonnement</div>
@@ -736,33 +673,11 @@
 </div>
 
 <script>
-// ========== ÉTAT DU JEU ==========
 const SAVE_KEY = 'ldm_save_v1';
-// Gestion clé API
-function sauvegarderCleApi(val) {
-  val = val.trim();
-  G.apiKey = val;
-  localStorage.setItem('ldm_api_key', val);
-  const st = document.getElementById('api-key-status');
-  if(st) st.textContent = val.startsWith('sk-ant-') ? '✓ Clé valide' : val.length > 0 ? '⚠ Format inattendu' : '';
-}
-
-function chargerCleApi() {
-  const saved = localStorage.getItem('ldm_api_key') || '';
-  G.apiKey = saved;
-  const input = document.getElementById('api-key-input');
-  if(input) {
-    input.value = saved;
-    // Masquer le champ si clé déjà sauvegardée et valide
-    const zone = document.getElementById('api-key-zone');
-    if(zone) zone.style.display = saved.startsWith('sk-ant-') ? 'none' : 'flex';
-  }
-}
 
 let G = {
-  apiKey: '',
   joueur: { prenom: 'Alexandre', sexe: 'homme', age: 34 },
-  progression: { acte: 1, scene: 1, extraitTermine: false, abonne: false },
+  progression: { acte: 1, scene: 1, extraitTermine: false, abonne: false, adminMode: false, nbChoix: 0 },
   savoir: {
     sophieEstPredatrice: false,
     marionEstMorte: false,
@@ -770,53 +685,33 @@ let G = {
     bernardSaitPourGerard: false,
     marionEtPierreEnContact: false
   },
-  choixCles: {
-    filature: null,
-    sequestration: null,
-    florentSaitPourSerge: false,
-    alleSeulALadresse: false
-  },
   indices: {
     photoMarion: false,
     premierCahier: false,
     deuxiemeCahier: false,
     boitePreuves: false,
-    franckIdentifie: false,
     adresseGriffonnee: false
-  },
-  personnages: {
-    bernard: 'inconnu', florent: 'inconnu', lola: 'inconnu',
-    yvette: 'inconnu', remi: 'inconnu', serge: 'inconnu', bruno: 'inconnu'
   },
   historique: [],
   streaming: false
 };
 
-// ========== SAUVEGARDE ==========
-function sauvegarder() {
-  localStorage.setItem(SAVE_KEY, JSON.stringify(G));
-}
+function sauvegarder() { localStorage.setItem(SAVE_KEY, JSON.stringify(G)); }
 
 function charger() {
   const data = localStorage.getItem(SAVE_KEY);
-  if(data) {
-    try { return JSON.parse(data); } catch(e) { return null; }
-  }
+  if(data) { try { return JSON.parse(data); } catch(e) { return null; } }
   return null;
 }
 
-// ========== INIT ==========
 window.onload = function() {
-  chargerCleApi();
   const save = charger();
   if(save && save.joueur && save.joueur.prenom) {
     document.getElementById('btn-reprendre').style.display = 'block';
   }
 };
 
-function demarrerNouvellePartie() {
-  afficherEcran('screen-setup');
-}
+function demarrerNouvellePartie() { afficherEcran('screen-setup'); }
 
 function reprendrePartie() {
   const save = charger();
@@ -828,13 +723,11 @@ function reprendrePartie() {
     } else {
       afficherEcran('screen-game');
       majProgression();
-      // Reprend l'histoire
       envoyerMessage('Résume brièvement où nous en sommes et continue l\'histoire depuis le dernier moment.');
     }
   }
 }
 
-// ========== SETUP ==========
 let sexeChoisi = 'homme';
 
 function choisirSexe(sexe, el) {
@@ -844,9 +737,7 @@ function choisirSexe(sexe, el) {
   document.getElementById('prenom-input').value = sexe === 'homme' ? 'Alexandre' : 'Inès';
 }
 
-function updateAge(val) {
-  document.getElementById('age-display').textContent = val + ' ans';
-}
+function updateAge(val) { document.getElementById('age-display').textContent = val + ' ans'; }
 
 function lancerJeu() {
   const prenom = document.getElementById('prenom-input').value.trim() || (sexeChoisi === 'homme' ? 'Alexandre' : 'Inès');
@@ -856,11 +747,9 @@ function lancerJeu() {
   sauvegarder();
   afficherEcran('screen-game');
   majProgression();
-  // Lance la première scène
   envoyerMessage('Commence l\'Acte I Scène 1 — La route vers Mourèze.');
 }
 
-// ========== PROGRESSION ==========
 function toggleLdmPanel() {
   const panel = document.getElementById('ldm-panel');
   const btn = document.querySelector('.panel-toggle-btn');
@@ -904,12 +793,8 @@ function majProgression() {
   });
 }
 
-// ========== SYSTÈME PROMPT ==========
 function buildSystemPrompt() {
   const j = G.joueur;
-  const pronom = j.sexe === 'femme' ? 'elle' : 'il';
-  const detective = j.sexe === 'femme' ? 'détective' : 'détective';
-
   return `Tu es le narrateur de "Les Doux Mensonges" — un roman policier interactif français. Tu n'es pas un assistant. Tu es un auteur de roman noir.
 
 === MOTEUR LITTÉRAIRE ===
@@ -923,11 +808,11 @@ LANGUE : Toujours en français. Toujours à la deuxième personne du singulier. 
 LONGUEUR : 180 à 280 mots par réponse.
 
 === RÈGLES DE COHÉRENCE ABSOLUE ===
-RÈGLE 1 — CONSTRUCTION PROGRESSIVE : L'histoire avance comme un roman. Chaque scène pose des éléments qui seront utiles plus tard. Rien n'arrive sans raison narrative.
-RÈGLE 2 — MÉMOIRE TOTALE : Tu te souviens de TOUT ce qui s'est passé dans cette session. Aucun personnage ne se contredit. Aucun lieu ne change. Aucun fait établi ne disparaît.
-RÈGLE 3 — TWISTS DOSÉS : Les twists arrivent aux actes prévus UNIQUEMENT. Avant l'Acte III, AUCUN soupçon sur Sophie, AUCUN soupçon sur Pierre. Le joueur doit avoir l'impression d'une enquête classique jusqu'à ce que la réalité remonte.
-RÈGLE 4 — PERSONNAGES CONSISTANTS : Chaque personnage a une psychologie fixe. Pierre est un père brisé et sincère. Rémi est fermé et amer. Bernard est accommodant jusqu'à une limite. Ils ne changent pas d'attitude sans raison narrative explicite.
-RÈGLE 5 — CHOIX ANCRÉS : Les 4 choix proposés au joueur doivent être directement liés à la situation narrative en cours — jamais génériques, jamais abstraits. Si le joueur est devant Rémi au café, les choix concernent Rémi et ce moment précis.
+RÈGLE 1 — CONSTRUCTION PROGRESSIVE : L'histoire avance comme un roman. Chaque scène pose des éléments qui seront utiles plus tard.
+RÈGLE 2 — MÉMOIRE TOTALE : Tu te souviens de TOUT ce qui s'est passé dans cette session.
+RÈGLE 3 — TWISTS DOSÉS : Les twists arrivent aux actes prévus UNIQUEMENT.
+RÈGLE 4 — PERSONNAGES CONSISTANTS : Chaque personnage a une psychologie fixe.
+RÈGLE 5 — CHOIX ANCRÉS : Les 4 choix proposés au joueur doivent être directement liés à la situation narrative en cours.
 
 === PROTAGONISTE ===
 Prénom : ${j.prenom}
@@ -950,7 +835,7 @@ Deuxième cahier : ${G.indices.deuxiemeCahier ? 'OUI' : 'NON'}
 Boîte de preuves : ${G.indices.boitePreuves ? 'OUI' : 'NON'}
 Adresse griffonnée : ${G.indices.adresseGriffonnee ? 'OUI' : 'NON'}
 
-=== FAITS IMMUABLES — NE JAMAIS CONTREDIRE ===
+=== FAITS IMMUABLES ===
 - Pierre Vasseur a reçu le dossier de Marion 3 semaines avant d'engager le détective.
 - Pierre est allé voir Sophie la nuit avant sa disparition — confrontation, pas meurtre ce soir-là.
 - Pierre connaissait l'adresse de la cachette — c'est lui qui a envoyé le message anonyme.
@@ -967,7 +852,6 @@ Adresse griffonnée : ${G.indices.adresseGriffonnee ? 'OUI' : 'NON'}
 - Florent ne révèle jamais d'information volontairement.
 
 === PHRASE CLÉ DE PIERRE VASSEUR ===
-Cette phrase ouvre ET ferme sa lettre. C'est aussi la première chose qu'il dit au détective au téléphone :
 "Il y a des choses qu'on ne peut pas laisser continuer."
 
 === RÈGLES ABSOLUES ===
@@ -994,7 +878,7 @@ Quand le joueur découvre un fait important, ajoute ces tags en fin de réponse 
 [SAVOIR:sophieEstPredatrice] [SAVOIR:marionEstMorte] [SAVOIR:pierreAMenti] [INDICE:photoMarion] [INDICE:premierCahier] [INDICE:deuxiemeCahier] [INDICE:boitePreuves] [INDICE:adresseGriffonnee] [ACTE:2] [SCENE:2]`.trim();
 }
 
-// ========== APPEL API ==========
+// ── APPEL API via proxy Vercel ──
 async function envoyerMessage(contenu) {
   if(G.streaming) return;
   G.streaming = true;
@@ -1005,6 +889,7 @@ async function envoyerMessage(contenu) {
   const storyEl = document.getElementById('story-text');
   storyEl.innerHTML = '<span class="curseur"></span>';
 
+  if(!G.progression.adminMode) G.progression.nbChoix = (G.progression.nbChoix || 0) + 1;
 
   G.historique.push({ role: 'user', content: contenu });
   if(G.historique.length > 30) G.historique = G.historique.slice(-30);
@@ -1012,25 +897,20 @@ async function envoyerMessage(contenu) {
   let texteAccumule = '';
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': G.apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'messages-2023-12-15',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        stream: true,
         system: buildSystemPrompt(),
-        messages: G.historique
+        messages: G.historique,
+        max_tokens: 1000
       })
     });
 
-    if(!response.ok) throw new Error('Erreur API');
+    if(!response.ok) {
+      const e = await response.json().catch(() => ({}));
+      throw new Error(e.error || `Erreur ${response.status}`);
+    }
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
@@ -1055,31 +935,25 @@ async function envoyerMessage(contenu) {
       }
     }
 
-    // Traitement final
     traiterReponse(texteAccumule);
     G.historique.push({ role: 'assistant', content: texteAccumule });
     sauvegarder();
 
   } catch(err) {
-    storyEl.innerHTML = '<p style="color:var(--rouge);">Une erreur est survenue. Vérifiez votre clé d\'accès.</p>';
+    storyEl.innerHTML = `<p style="color:var(--rouge);">Erreur : ${err.message}</p>`;
   }
 
   G.streaming = false;
 }
 
 function nettoyerTexte(texte) {
-  // Coupe TOUT ce qui suit le bloc [CHOIX] — quelle que soit la forme
-  // Gère : [CHOIX], [ CHOIX ], [choix], variantes avec tirets ou espaces
   let t = texte.replace(/\[\s*CHOIX\s*\][\s\S]*/i, '');
-  // Supprime aussi les lignes commençant par un chiffre suivi de — ou - (choix bruts qui auraient passé)
   t = t.replace(/^[1-4][\s\t]*[\u2014\u2013\-].*$/gm, '');
-  // Supprime les autres tags techniques
   t = t.replace(/\[EXTRAIT_TERMINE\]/gi, '')
        .replace(/\[SAVOIR:[^\]]*\]/gi, '')
        .replace(/\[INDICE:[^\]]*\]/gi, '')
        .replace(/\[ACTE:\d+\]/gi, '')
        .replace(/\[SCENE:\d+\]/gi, '');
-  // Supprime les lignes vides multiples
   t = t.replace(/\n{3,}/g, '\n\n');
   return t.trim();
 }
@@ -1093,7 +967,6 @@ function afficherTexteStream(texte) {
 function traiterReponse(texte) {
   const storyEl = document.getElementById('story-text');
 
-  // Mise à jour état
   if(texte.includes('[SAVOIR:sophieEstPredatrice]')) G.savoir.sophieEstPredatrice = true;
   if(texte.includes('[SAVOIR:marionEstMorte]')) G.savoir.marionEstMorte = true;
   if(texte.includes('[SAVOIR:pierreAMenti]')) G.savoir.pierreAMenti = true;
@@ -1104,39 +977,33 @@ function traiterReponse(texte) {
   if(texte.includes('[INDICE:boitePreuves]')) G.indices.boitePreuves = true;
   if(texte.includes('[INDICE:adresseGriffonnee]')) G.indices.adresseGriffonnee = true;
 
-  // Mise à jour acte/scène
   const acteMatch = texte.match(/\[ACTE:(\d+)\]/);
   if(acteMatch) { G.progression.acte = parseInt(acteMatch[1]); majProgression(); }
-  majPanel();
   const sceneMatch = texte.match(/\[SCENE:(\d+)\]/);
   if(sceneMatch) G.progression.scene = parseInt(sceneMatch[1]);
 
-  // Paywall
+  majPanel();
+
   if(texte.includes('[EXTRAIT_TERMINE]') && !G.progression.abonne && !G.progression.adminMode) {
     G.progression.extraitTermine = true;
     sauvegarder();
-    // Affiche le texte final puis redirige
     storyEl.innerHTML = nettoyerTexte(texte).split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
     setTimeout(() => afficherEcran('screen-paywall'), 2000);
     return;
   }
 
-  // Affiche le texte propre
   storyEl.innerHTML = nettoyerTexte(texte).split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
 
-  // Extrait les choix
   const choixMatch = texte.match(/\[\s*CHOIX\s*\]([\s\S]*?)(?=\[EXTRAIT|\[SAVOIR|\[INDICE|\[ACTE|\[SCENE|$)/i);
   if(choixMatch) {
     const lignes = choixMatch[1].split('\n').filter(l => /^\d[\s—\-]/.test(l.trim()));
     if(lignes.length) {
       const container = document.getElementById('choix-container');
-      container.innerHTML = '<p class="choix-label">Que faites-vous ?</p>' + lignes.map(l => {
-        const num = l.match(/^(\d)/)[1];
+      container.innerHTML = '<p class="choix-label">Que faites-vous ?</p>' + lignes.map(l => {
         const txt = l.replace(/^\d[\s\u2014\u2013\-]+/, '').trim();
         return `<button class="choix-btn" onclick="choisir('${txt.replace(/'/g, "\\'")}')">${txt}</button>`;
       }).join('');
       container.style.display = 'flex';
-      // Pas de scroll forcé à la fin — le lecteur reste où il est
     }
   }
 }
@@ -1146,7 +1013,7 @@ function choisir(texte) {
   envoyerMessage(texte);
 }
 
-// --- SYSTÈME CODES ABONNEMENT RÉCIT GAMES ---
+// ── CODES ABONNEMENT ──
 const API_CODES_URL = 'https://recitgames-api.vercel.app/api/verify-code';
 
 function afficherSaisieCode() {
@@ -1185,13 +1052,11 @@ async function validerCode() {
     if(data.valid || data.valide) {
       G.progression.abonne = true;
       if(data.admin) G.progression.adminMode = true;
-      G.progression.codeAbonnement = code;
-      G.progression.abonneJusquau = data.expire_le;
       sauvegarder();
       document.getElementById('code-overlay').remove();
       afficherEcran('screen-game');
       majProgression();
-      envoyerMessage("Le joueur vient de valider son abonnement. Continue l\'histoire depuis où nous en étions.");
+      envoyerMessage("Le joueur vient de valider son abonnement. Continue l'histoire depuis où nous en étions.");
     } else {
       msgEl.textContent = data.message === 'Abonnement expiré'
         ? 'Cet abonnement a expiré. Renouvelez sur recitgames.vercel.app.'
@@ -1204,9 +1069,6 @@ async function validerCode() {
   }
 }
 
-function deja_abonne() { afficherSaisieCode(); }
-
-// ========== NAVIGATION ==========
 function afficherEcran(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1215,3 +1077,4 @@ function afficherEcran(id) {
 </script>
 </body>
 </html>
+
